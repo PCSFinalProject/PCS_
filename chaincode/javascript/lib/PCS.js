@@ -186,7 +186,7 @@ class PCS extends Contract {
      * @returns {boolean} return true if approved
      */
     async approve(ctx, clientId, fiId) {
-        console.info('======== START : Approve financial institution for client data access ==========');
+        console.info('======== START : Approve Port Authority for client data access ==========');
 
         const res = await this.isWhoRegistered(ctx, clientId);
 
@@ -207,7 +207,7 @@ class PCS extends Contract {
 
         await ctx.stub.putState(clientFiIndexKey, Buffer.from('\u0000'));
         await ctx.stub.putState(fiClientIndexKey, Buffer.from('\u0000'));
-        console.info('======== END : Approve financial institution for client data access =========');
+        console.info('======== END : Approve Port Authority for client data access =========');
 
         return true;
     }
@@ -221,7 +221,7 @@ class PCS extends Contract {
      * @returns {boolean} return true if removed
      */
     async remove(ctx, clientId, fiId) {
-        console.info('======== START : Remove financial institution for client data access ==========');
+        console.info('======== START : Remove Port Authority for client data access ==========');
 
         if (!this.isWhoRegistered(ctx, clientId)) {
             return false;
@@ -239,7 +239,7 @@ class PCS extends Contract {
             await ctx.stub.deleteState(fiClientResult.value.key);
         }
 
-        console.info('======== END : Remove financial institution for client data access =========');
+        console.info('======== END : Remove Port Authority for client data access =========');
 
         return true;
     }

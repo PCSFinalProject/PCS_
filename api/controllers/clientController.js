@@ -61,7 +61,7 @@ exports.approve = async (req, res) => {
         .submitTransaction('approve', req.orgNum, req.ledgerUser, [req.cookies.ledgerId, fiId])
         .then(result => {
             if (result) {
-                return res.json({ message: `Financial Institution ${fiId} approved by ${req.cookies.ledgerId}` });
+                return res.json({ message: `Port Authority ${fiId} approved by ${req.cookies.ledgerId}` });
             }
             return res.status(500).json({ error: 'Something went wrong' });
         })
@@ -82,7 +82,7 @@ exports.remove = async (req, res) => {
         .submitTransaction('remove', req.orgNum, req.ledgerUser, [req.cookies.ledgerId, fiId])
         .then(result => {
             if (result) {
-                return res.json({ message: `Financial Institution ${fiId} removed by ${req.cookies.ledgerId}` });
+                return res.json({ message: `Port Authority ${fiId} removed by ${req.cookies.ledgerId}` });
             }
             return res.status(500).json({ error: 'Something went wrong' });
         })
