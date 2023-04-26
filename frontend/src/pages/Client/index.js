@@ -197,9 +197,9 @@ const Client = () => {
                     <Flex my={1}>
                         <Box ml={10} my={1}>
                             {approvedFiList.length > 0 ?
-                                <Heading as={'h3'} my={'auto'}>Your approved financial institutions:</Heading>
+                                <Heading as={'h3'} my={'auto'}>Your approved Port Authoritys:</Heading>
                                 :
-                                <Heading as={'h3'} my={'auto'}>You have no approved financial institutions</Heading>
+                                <Heading as={'h3'} my={'auto'}>You have no approved Port Authoritys</Heading>
                             }
                         </Box>
                         <Box ml={10} my={1}>
@@ -208,11 +208,11 @@ const Client = () => {
                     </Flex>
                 </Card>
                 <Card mt={20}>
-                    <Heading as={'h2'}>Approve financial institution</Heading>
+                    <Heading as={'h2'}>Approve Port Authority</Heading>
                     <Form onSubmit={handleSubmitApprove}>
                         <Flex mx={-3}>
                             <Box width={1} px={3}>
-                                <Field label="Financial institution ID" width={1}>
+                                <Field label="Port Authority ID" width={1}>
                                     <Form.Input
                                         type="text"
                                         required
@@ -238,11 +238,11 @@ const Client = () => {
                     </Form>
                 </Card>
                 <Card mt={20}>
-                    <Heading as={'h2'}>Remove financial institution approval</Heading>
+                    <Heading as={'h2'}>Remove Port Authority approval</Heading>
                     <Form onSubmit={handleSubmitRemove}>
                         <Flex mx={-3}>
                             <Box width={1} px={3}>
-                                <Field label="Financial institution ID" width={1}>
+                                <Field label="Port Authority ID" width={1}>
                                     <Form.Input
                                         type="text"
                                         required

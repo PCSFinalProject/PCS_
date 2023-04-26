@@ -135,14 +135,14 @@ const Login = () => {
                             <Box width={1} px={3}>
                                 <Field label="Role" optional={false}>
                                     <Radio
-                                        label="Client"
+                                        label="Port departments"
                                         my={2}
                                         value={"client"}
                                         checked={userType === "client"}
                                         onChange={handleRadio}
                                     />
                                     <Radio
-                                        label="Financial Institution"
+                                        label="Port Authority"
                                         my={2}
                                         value={"fi"}
                                         checked={userType === "fi"}

@@ -135,7 +135,7 @@ const Fi = () => {
                     </Box>
                 </Flex>
                 <Card>
-                    <Heading as={'h2'}>Financial institution data</Heading>
+                    <Heading as={'h2'}>Port Authority data</Heading>
                     <UserData userData={fiData} />
                 </Card>
                 <Card mt={20}>
