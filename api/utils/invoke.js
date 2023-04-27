@@ -35,7 +35,7 @@ async function main() {
         const contract = network.getContract('PCS');
 
         // Submit the specified transaction.
-        const result = await contract.submitTransaction('remove', 'CLIENT5', 'FI2');
+        const result = await contract.submitTransaction('remove', 'CLIENT5', 'PORT2');
         console.log(result.toString());
         console.log('Transaction has been submitted');
 

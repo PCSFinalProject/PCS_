@@ -37,7 +37,7 @@ popd
 pushd ./api/utils
 node enrollAdmin.js 1 admin1
 node enrollAdmin.js 2 admin2
-node registerUser.js 1 admin1 FI1
-node registerUser.js 2 admin2 FI2
-node populate.js 1 FI1
+node registerUser.js 1 admin1 PORT1
+node registerUser.js 2 admin2 PORT2
+node populate.js 1 PORT1
 popd
