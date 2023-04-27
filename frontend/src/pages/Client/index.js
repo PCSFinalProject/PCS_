@@ -197,9 +197,9 @@ const Client = () => {
                     <Flex my={1}>
                         <Box ml={10} my={1}>
                             {approvedFiList.length > 0 ?
-                                <Heading as={'h3'} my={'auto'}>Your approved Port Authoritys:</Heading>
+                                <Heading as={'h3'} my={'auto'}>You are approved by following Port Authority:</Heading>
                                 :
-                                <Heading as={'h3'} my={'auto'}>You have no approved Port Authoritys</Heading>
+                                <Heading as={'h3'} my={'auto'}>You have not approved by any Port Authority</Heading>
                             }
                         </Box>
                         <Box ml={10} my={1}>
@@ -208,7 +208,7 @@ const Client = () => {
                     </Flex>
                 </Card>
                 <Card mt={20}>
-                    <Heading as={'h2'}>Approve Port Authority</Heading>
+                    <Heading as={'h2'}>Join Port Authority(get approved)</Heading>
                     <Form onSubmit={handleSubmitApprove}>
                         <Flex mx={-3}>
                             <Box width={1} px={3}>
@@ -226,7 +226,7 @@ const Client = () => {
                         <Flex mx={-3} alignItems={'center'}>
                             <Box px={3}>
                                 <Button type="submit" disabled={isLoadingApprove}>
-                                    {isLoadingApprove ? <Loader color="white" /> : <p>Approve</p>}
+                                    {isLoadingApprove ? <Loader color="white" /> : <p>Get Approved</p>}
                                 </Button>
                             </Box>
                             {approvedMsg &&

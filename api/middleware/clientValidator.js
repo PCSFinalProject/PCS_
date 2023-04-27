@@ -25,7 +25,7 @@ exports.registration = [
         .withMessage('Name has non-alphanumeric characters.')
         .escape(),
     validator
-        .body('dateOfBirth', 'Invalid date of birth')
+        .body('dateOfJoining', 'Invalid date of Joining')
         .optional({ checkFalsy: true })
         .isISO8601()
         .escape(),

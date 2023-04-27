@@ -1,8 +1,8 @@
 [
     {
         "name": "user01",
-        "dateOfBirth": "1987-03-10",
-        "address": "Toronto, ON - Canada",
+        "dateOfJoining": "1987-03-10",
+        "address": "Mangalore",
         "idNumber": "873451",
         "whoRegistered": {
             "orgNum": 1,
@@ -11,8 +11,8 @@
     },
     {
         "name": "user02",
-        "dateOfBirth": "1991-11-19",
-        "address": "Mississauga, ON - Canada",
+        "dateOfJoining": "1991-11-19",
+        "address": "Mangalore",
         "idNumber": "839047",
         "whoRegistered": {
             "orgNum": 2,
@@ -20,9 +20,9 @@
         }
     },
     {
-        "name": "Jonas Kahnwald",
-        "dateOfBirth": "2002-07-01",
-        "address": "Winden",
+        "name": "user03",
+        "dateOfJoining": "2002-07-01",
+        "address": "Mangalore",
         "idNumber": "123456",
         "whoRegistered": {
             "orgNum": 1,
@@ -30,9 +30,9 @@
         }
     },
     {
-        "name": "Martha Nielsen",
-        "dateOfBirth": "2002-04-05",
-        "address": "Winden",
+        "name": "user04",
+        "dateOfJoining": "2002-04-05",
+        "address": "Mangalore",
         "idNumber": "123123",
         "whoRegistered": {
             "orgNum": 2,
@@ -40,9 +40,9 @@
         }
     },
     {
-        "name": "Claudia Tiedemann",
-        "dateOfBirth": "1942-10-17",
-        "address": "Winden",
+        "name": "user05",
+        "dateOfJoining": "1942-10-17",
+        "address": "Chennai",
         "idNumber": "123321",
         "whoRegistered": {
             "orgNum": 1,
@@ -50,9 +50,9 @@
         }
     },
     {
-        "name": "Elisabeth Doppler",
-        "dateOfBirth": "2011-12-21",
-        "address": "Winden",
+        "name": "user06",
+        "dateOfJoining": "2011-12-21",
+        "address": "Chennai",
         "idNumber": "654321",
         "whoRegistered": {
             "orgNum": 1,
@@ -60,9 +60,9 @@
         }
     },
     {
-        "name": "H.G. Tannhaus",
-        "dateOfBirth": "1923-11-07",
-        "address": "Winden",
+        "name": "user07",
+        "dateOfJoining": "1923-11-07",
+        "address": "Chennai",
         "idNumber": "654123",
         "whoRegistered": {
             "orgNum": 2,

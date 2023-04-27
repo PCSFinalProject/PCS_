@@ -26,7 +26,7 @@ const Login = () => {
     };
 
     function handleDateOfBirth(e) {
-        setClientData({ ...clientData, dateOfBirth: e.target.value });
+        setClientData({ ...clientData, dateOfJoining: e.target.value });
     };
 
     function handleIdNumber(e) {
@@ -50,7 +50,7 @@ const Login = () => {
             if (
                 clientData.name && clientData.name.length > 0 &&
                 clientData.address && clientData.address.length > 0 &&
-                clientData.dateOfBirth && clientData.dateOfBirth.length > 0 &&
+                clientData.dateOfJoining && clientData.dateOfJoining.length > 0 &&
                 clientData.idNumber && clientData.idNumber.length > 0 &&
                 clientData.login && clientData.login.length > 0 &&
                 clientData.password && clientData.password.length > 5 &&
@@ -150,12 +150,12 @@ const Login = () => {
                                 </Field>
                             </Box>
                             <Box width={1} px={3}>
-                                <Field label="Date of Birth" width={1}>
+                                <Field label="Date of Joining" width={1}>
                                     <Form.Input
                                         type="date"
                                         required
                                         onChange={handleDateOfBirth}
-                                        value={clientData.dateOfBirth}
+                                        value={clientData.dateOfJoining}
                                         width={1}
                                     />
                                 </Field>

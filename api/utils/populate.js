@@ -45,7 +45,7 @@ function saveFi(login, password, ledgerId, orgCredentials, cb) {
             console.log(err);
             return;
         }
-        console.log('New fi: ' + newFi.login);
+        console.log('New Port: ' + newFi.login);
         cb(null, newFi);
     });
 }

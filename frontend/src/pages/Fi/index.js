@@ -169,7 +169,7 @@ const Fi = () => {
                                     <Text mb={2} fontWeight={600} fontSize={'14px'}>What data do you want?</Text>
                                     <Form.Check label="Name" value="name" onChange={handleClientFields} />
                                     <Form.Check label="Address" value="address" onChange={handleClientFields} />
-                                    <Form.Check label="Date of Birth" value="dateOfBirth" onChange={handleClientFields} />
+                                    <Form.Check label="Date of Joining" value="dateOfJoining" onChange={handleClientFields} />
                                     <Form.Check label="Id Number" value="idNumber" onChange={handleClientFields} />
                                 </Box>
                             </Box>

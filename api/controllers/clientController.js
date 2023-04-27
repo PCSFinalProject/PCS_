@@ -35,7 +35,7 @@ exports.login = async (req, res) => {
 
 exports.getClientData = (req, res) => {
 
-    const fields = ['name', 'address', 'dateOfBirth', 'idNumber', 'whoRegistered'];
+    const fields = ['name', 'address', 'dateOfJoining', 'idNumber', 'whoRegistered'];
 
     networkConnection
         .evaluateTransaction('getClientData', req.orgNum, req.ledgerUser, [req.cookies.ledgerId, fields || []])
