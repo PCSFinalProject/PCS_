@@ -1,5 +1,5 @@
 const { Contract } = require('fabric-contract-api');
-const initialCustomDutyData = require('../data/initCustomDutyData.json');
+const initialCustomDutyData = require('../data/initialCustomDutyData.json');
 class CustomDuty extends Contract {
 
     constructor() {

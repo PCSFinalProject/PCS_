@@ -1,5 +1,6 @@
 const { Contract } = require('fabric-contract-api');
 const ClientIdentity = require('fabric-shim').ClientIdentity;
+const initialTrafficDept = require('../data/initialTrafficData.json');
 
 class TrafficDept extends Contract {
 
@@ -7,6 +8,18 @@ class TrafficDept extends Contract {
         super('TrafficDept');
         this.nextTrafficDeptId = 0;
     }
+    async initLedger(ctx) {
+        console.info('============= START : Initialize Ledger Of TrafficDept ===========');
+        const trafficDept = initialTrafficDept;
+        for (let i = 0; i < trafficDept.length; i++) {
+            trafficDept[i].docType = 'trafficDept';
+            trafficDept[i].id = 'TRAFFICDEPT' + this.nextTrafficDeptId;
+            await ctx.stub.putState('TRAFFICDEPT' +this.nextTrafficDeptId , Buffer.from(JSON.stringify(trafficDept[this.nextTrafficDeptId])));
+            console.info('Added <--> ', trafficDept[this.nextTrafficDeptId++]);
+        }
+        console.info('============= END : Initialize Ledger ===========');
+    }
+    
     async allocateBerth(ctx, shipId, berthId) {
         // Retrieve the ship and berth data from the ledger
         const shipAsBytes = await ctx.stub.getState(shipId);

@@ -1,6 +1,6 @@
 const { Contract } = require('fabric-contract-api');
 const ClientIdentity = require('fabric-shim').ClientIdentity;
-const initialShip = require('../data/initShipAgency.json');
+const initialShip = require('../data/initialShipAgencyData.json');
 
 class Ship extends Contract {
 

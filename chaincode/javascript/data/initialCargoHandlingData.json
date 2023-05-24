@@ -1,0 +1,108 @@
+[
+    {
+      "id": "2345",
+      "name": "Port of San Francisco Cargo Handling Agency",
+      "address": "1 Market Street, San Francisco, CA 94105",
+      "phoneNumber": "1-415-555-1234",
+      "emailAddress": "portofsanfrancisco@portofsanfrancisco.org",
+      "website": "https://www.portofsanfrancisco.org/",
+      "hoursOfOperation": "Monday-Friday, 8am-5pm",
+      "contactPerson": "Jane Johnson, Director of Cargo Operations",
+      "unloadingCapacity": 8000,
+      "unloadingEquipment": [
+        "Cranes",
+        "Forklifts",
+        "Conveyor Belts"
+      ],
+      "unloadingRates": [
+        "$90/ton",
+        "$40/truckload",
+        "$20/pallet"
+      ]
+    },
+    {
+      "id": "3456",
+      "name": "Port of Seattle Cargo Handling Agency",
+      "address": "1000 4th Avenue, Seattle, WA 98104",
+      "phoneNumber": "1-206-555-5678",
+      "emailAddress": "portofseattle@portofseattle.org",
+      "website": "https://www.portofseattle.org/",
+      "hoursOfOperation": "Monday-Friday, 8:30am-5pm",
+      "contactPerson": "Michael Anderson, Director of Cargo Operations",
+      "unloadingCapacity": 12000,
+      "unloadingEquipment": [
+        "Cranes",
+        "Forklifts",
+        "Reach Stackers"
+      ],
+      "unloadingRates": [
+        "$110/ton",
+        "$60/truckload",
+        "$30/pallet"
+      ]
+    },
+    {
+      "id": "4567",
+      "name": "Port of Miami Cargo Handling Agency",
+      "address": "1015 N America Way, Miami, FL 33132",
+      "phoneNumber": "1-305-555-7890",
+      "emailAddress": "portofmiami@portofmiami.org",
+      "website": "https://www.portofmiami.org/",
+      "hoursOfOperation": "Monday-Friday, 9am-6pm",
+      "contactPerson": "David Williams, Director of Cargo Operations",
+      "unloadingCapacity": 7500,
+      "unloadingEquipment": [
+        "Cranes",
+        "Forklifts",
+        "Front-End Loaders"
+      ],
+      "unloadingRates": [
+        "$80/ton",
+        "$45/truckload",
+        "$22/pallet"
+      ]
+    },
+    {
+      "id": "5678",
+      "name": "Port of Vancouver Cargo Handling Agency",
+      "address": "999 Canada Place, Vancouver, BC V6C 3E1, Canada",
+      "phoneNumber": "1-604-555-2345",
+      "emailAddress": "portofvancouver@portofvancouver.org",
+      "website": "https://www.portofvancouver.org/",
+      "hoursOfOperation": "Monday-Friday, 8am-5pm",
+      "contactPerson": "Jennifer Lee, Director of Cargo Operations",
+      "unloadingCapacity": 9500,
+      "unloadingEquipment": [
+        "Cranes",
+        "Forklifts",
+        "Straddle Carriers"
+      ],
+      "unloadingRates": [
+        "$95/ton",
+        "$55/truckload",
+        "$27/pallet"
+      ]
+    },
+    {
+      "id": "6789",
+      "name": "Port of New Orleans Cargo Handling Agency",
+      "address": "1350 Port of New Orleans Place, New Orleans, LA 70130",
+      "phoneNumber": "1-504-555-3456",
+      "emailAddress": "portofneworleans@portofneworleans.org",
+      "website": "https://www.portofneworleans.org/",
+      "hoursOfOperation": "Monday-Friday, 8:30am-5pm",
+      "contactPerson": "Robert Davis, Director of Cargo Operations",
+      "unloadingCapacity": 6500,
+      "unloadingEquipment": [
+        "Cranes",
+        "Forklifts",
+        "Gantry Cranes"
+      ],
+      "unloadingRates": [
+        "$75/ton",
+        "$35/truckload",
+        "$18/pallet"
+      ]
+    }
+  ]
+  

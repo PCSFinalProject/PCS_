@@ -1,6 +1,6 @@
 const { Contract } = require('fabric-contract-api');
 const ClientIdentity = require('fabric-shim').ClientIdentity;
-const initialCargoHandlingData = require('../data/initCargoHandlingData.json');
+const initialCargoHandlingData = require('../data/initialCargoHandlingData.json');
 class CargoHandling extends Contract {
     constructor() {
         super('CargoHandling');
