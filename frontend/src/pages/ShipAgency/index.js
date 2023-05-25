@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { Flex, Box, Card, Heading, Text, Form,Field,Button, Loader, Select, FileUpload, Input } from 'rimble-ui'
+import { Flex, Box, Card, Heading, Text, Form,Field,Button, Loader, Select, Input } from 'rimble-ui'
    
 
 import qs from 'qs';
@@ -11,7 +11,8 @@ import api from '../../service/api';
 import UserData from '../../components/UserData';
 import { setUserData } from '../../functions/setUserData';
 import { Tab, Nav } from 'react-bootstrap';
-const Client = () => {
+import Fi from '../Fi';
+const ShipAgency = () => {
 
     const navigate = useNavigate();
     const [cookies, setCookie, removeCookie] = useCookies();
@@ -25,52 +26,82 @@ const Client = () => {
     const [removedMsg, setRemovedMsg] = useState('');
     const [isLoadingRemove, setIsLoadingRemove] = useState(false);
     const [activeTab, setActiveTab] = useState('tab1');
-  
+    const [selectedOptionShip, setSelectedOptionShip] = useState('');
       const [selectedOption, setSelectedOption] = useState('');
-      const [files, setFiles] = useState([]);
-      const [input1, setInput1] = useState('');
-      const [input2, setInput2] = useState('');
-      const [input3, setInput3] = useState('');
-    
-      const handleOptionChange = (event) => {
+        const [selectedOptionShipExit, setSelectedOptionShipExit] = useState('');
+
+
+      // This is Request Entry
+      const handleRequestEntry = (event) => {
+        event.preventDefault();
+        console.log('Selected Option:', selectedOption);
+        };
+
+
+      const handleOptionChangePort = (event) => {
         setSelectedOption(event.target.value);
       };
-    
-      const handleFileUpload = (event) => {
-        const uploadedFiles = Array.from(event.target.files);
-        setFiles(uploadedFiles);
+      const handleOptionChangeShipEntry = (event) => {
+        setSelectedOptionShip(event.target.value);
       };
     
-      const handleInputChange1 = (event) => {
-        setInput1(event.target.value);
-      };
-    
-      const handleInputChange2 = (event) => {
-        setInput2(event.target.value);
-      };
-    
-      const handleInputChange3 = (event) => {
-        setInput3(event.target.value);
-      };
+      const handleOptionChangeRequestExit = (event) => {
+          setSelectedOptionShipExit(event.target.value);
+        };
+        const handleRequestExist = (event) => {
+            event.preventDefault();
+            console.log('Selected Option:', selectedOptionShipExit);
+            };
+
+        
+        const handleOptionChangeRequest = (event) => {
+          setSelectedOption(event.target.value);
+        };
+     
     
       const handleSubmit = (event) => {
         event.preventDefault();
     
         // Perform form submission logic here
         console.log('Selected Option:', selectedOption);
-        console.log('Input 1:', input1);
-        console.log('Input 2:', input2);
-        console.log('Input 3:', input3);
+      
     
         // Reset form fields
         setSelectedOption('');
-        setInput1('');
-        setInput2('');
-        setInput3('');
+      
       };
+
+
+// this is for tab
     const handleTabSelect = (selectedTab) => {
       setActiveTab(selectedTab);
     };
+    // This is Ship create Tab 
+    const [formData, setFormData] = useState({
+        id: '',
+        name: '',
+        type: '',
+        size: '',
+        cargo: '',
+        destination: '',
+        status: '',
+        berthId: '',
+        customsCleared: false,
+        unloading: false,
+      });
+    
+      const handleInputChangeShip = (event) => {
+        const { name, value } = event.target;
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [name]: value,
+        }));
+      };
+    
+
+
+
+    // This Is old 
     function handleChooseFiApprove(e) {
         setFiIdApprove(e.target.value.toUpperCase());
     };
@@ -237,7 +268,7 @@ const Client = () => {
                     </Box>
                 </Flex>
                 <Card>
-                    <Heading as={'h2'}>Client data</Heading>
+                    <Heading as={'h2'}>Ship Agency Data</Heading>
                     <UserData userData={clientData} />
                 </Card>
 
@@ -247,12 +278,15 @@ const Client = () => {
           <Nav.Link eventKey="tab1">Manage Port</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="tab2">IMPORT</Nav.Link>
+          <Nav.Link eventKey="tab2">SHIPMENT CREATION</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="tab3">EXPORT</Nav.Link>
+          <Nav.Link eventKey="tab3">Request Entry</Nav.Link>
         </Nav.Item>
-      </Nav>
+        <Nav.Item>
+            <Nav.Link eventKey="tab4">Request Exist</Nav.Link>
+            </Nav.Item>
+        </Nav>  
       <Tab.Content>
         <Tab.Pane eventKey="tab1">
                 <Card mt={20}>
@@ -332,34 +366,73 @@ const Client = () => {
                 </Tab.Pane>
         <Tab.Pane eventKey="tab2">
         <Form onSubmit={handleSubmit}>
-      <Field label="Dropdown" width={1}>
-        <Select value={selectedOption} onChange={handleOptionChange}>
-          <option value="">Select an option</option>
-          <option value="option1">Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
-        </Select>
+    <Flex flexWrap="wrap">
+        <Field label=" SHIP ID" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="id" value={formData.id} onChange={handleInputChangeShip} required />
       </Field>
-      <Field label="Files" width={1}>
-        <Input type="file" accept="application/zip" onChange={handleFileUpload} multiple />
+      <Field label="Name" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="name" value={formData.name} onChange={handleInputChangeShip} required />
       </Field>
-      <Field label="Input 1" width={1}>
-        <Input value={input1} onChange={handleInputChange1} />
+      <Field label="Type" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="type" value={formData.type} onChange={handleInputChangeShip} required/>
       </Field>
-      <Field label="Input 2" width={1}>
-        <Input value={input2} onChange={handleInputChange2} />
+      <Field label="Size" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="size" value={formData.size} onChange={handleInputChangeShip} required/>
       </Field>
-      <Field label="Input 3" width={1}>
-        <Input value={input3} onChange={handleInputChange3} />
+      <Field label="Cargo" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="cargo" value={formData.cargo} onChange={handleInputChangeShip} required/>
       </Field>
+      <Field label="Destination" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="destination" value={formData.destination} onChange={handleInputChangeShip}required/>
+      </Field>
+    
+      </Flex>
       <Flex justifyContent="flex-end" mt={3}>
         <Button type="submit">Submit</Button>
       </Flex>
     </Form>
-        </Tab.Pane>
+        </Tab.Pane >
         <Tab.Pane eventKey="tab3">
-          <p>Content for Tab 3</p>
+        <Form onSubmit={handleRequestEntry}>
+        <Field label="Port" width={1}>
+        <Select value={selectedOption} onChange={handleOptionChangePort} required>
+          <option value="">Select an option</option>
+          <option value="option1">Port 1</option>
+          <option value="option2"> Port 2</option>
+          <option value="option3">Port 3</option>
+        </Select>
+      </Field>
+      <Field label="Ship" width={1}>
+        <Select value={selectedOption} onChange={handleOptionChangeShipEntry} required>
+            <option value="">Select an option</option>
+            <option value="option1">Ship 1</option>
+            <option value="option2">Ship 2</option>
+            <option value="option3">Ship 3</option>
+        </Select>
+        </Field>
+        
+      <Flex justifyContent="centre" mt={3}>
+        <Button type="submit">Request</Button>
+      </Flex>
+            </Form>
         </Tab.Pane>
+        <Tab.Pane eventKey="tab4">
+        <Form onSubmit={handleRequestExist}>
+        <Field label="Ship" width={1}>
+        <Select value={selectedOption} onChange={handleOptionChangeRequestExit} required>
+            <option value="">Select an option</option>
+            <option value="option1">Ship 1</option>
+            <option value="option2">Ship 2</option>
+            <option value="option3">Ship 3</option>
+        </Select>
+        </Field>
+         <Flex justifyContent="centre" mt={4}>
+        <Button type="submit">Request</Button>
+      </Flex>
+        </Form>
+        </Tab.Pane>
+
+
       </Tab.Content>
     </Tab.Container>
             </Box>
@@ -367,4 +440,4 @@ const Client = () => {
     );
 }
 
-export default Client;
+export default ShipAgency;

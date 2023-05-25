@@ -110,7 +110,7 @@ const Login = () => {
 
     const handleClickOnBack = e => {
         e.preventDefault();
-        navigate('/fi');
+        navigate('/login');
     }
 
     return (
@@ -118,10 +118,10 @@ const Login = () => {
             <Box mx={'auto'} my={'auto'} width={[1, 9 / 12, 7 / 12]}>
                 <Flex px={2} mx={'auto'} justifyContent='space-between'>
                     <Box my={'auto'}>
-                        <Heading as={'h2'} color={'primary'}>New Client</Heading>
+                        <Heading as={'h2'} color={'primary'}>Register</Heading>
                     </Box>
                     <Box my={'auto'}>
-                        <Button onClick={handleClickOnBack}>Back</Button>
+                        <Button onClick={handleClickOnBack}>Login</Button>
                     </Box>
                 </Flex>
                 <Form onSubmit={handleSubmit}>

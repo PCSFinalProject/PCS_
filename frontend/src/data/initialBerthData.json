@@ -1,0 +1,5 @@
+[  {    "id": "BERTH1",    "name": "Berth 1",      "maxCapacity": 10,    "currentCapacity": 5,    "status": "Available"  },
+  {    "id": "BERTH2",    "name": "Berth 2",      "maxCapacity": 8,    "currentCapacity": 2,    "status": "Available"  }, 
+   {    "id": "BERTH3",    "name": "Berth 3",      "maxCapacity": 12,    "currentCapacity": 9,    "status": "Occupied"  },
+     {    "id": "BERTH4",    "name": "Berth 4",      "maxCapacity": 15,    "currentCapacity": 12,    "status": "Available"  },
+       {    "id": "BERTH5",    "name": "Berth 5",      "maxCapacity": 20,    "currentCapacity": 18,    "status": "Occupied"  }]
