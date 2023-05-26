@@ -199,7 +199,7 @@ const CustomOfficer = () => {
                         <Heading as={'h1'} color='primary'>PCS</Heading>
                     </Box>
                     <Box my={'auto'}>
-                        <Button onClick={handleClickLogout}>Logout</Button>
+                        <Button variant="warning" onClick={handleClickLogout}>Logout</Button>
                     </Box>
                 </Flex>
                 <Card>
@@ -283,7 +283,7 @@ const CustomOfficer = () => {
                         </Flex>
                         <Flex mx={-3} alignItems={'center'}>
                             <Box px={3}>
-                                <Button type="submit" disabled={isLoadingRemove}>
+                                <Button variant="danger" type="submit" disabled={isLoadingRemove}>
                                     {isLoadingRemove ? <Loader color="white" /> : <p>Remove</p>}
                                 </Button>
                             </Box>
@@ -318,10 +318,10 @@ const CustomOfficer = () => {
             <td>{rowData.destination}</td>
             <td>{rowData.status}</td>
             <td>
-            <Button onClick={() => handleCustomSubmitImportClearence(rowData)}>Submit</Button>
+            <Button variant="success" onClick={() => handleCustomSubmitImportClearence(rowData)}>Accept</Button>
             </td>
             <td>
-            <Button onClick={() => handleCustomSubmitImportClearence(rowData)}>Reject</Button>
+            <Button variant="danger" onClick={() => handleCustomSubmitImportClearence(rowData)}>Reject</Button>
 
             </td>
           </tr>
@@ -351,10 +351,10 @@ const CustomOfficer = () => {
             <td>{rowData.destination}</td>
             <td>{rowData.status}</td>
             <td>
-            <Button onClick={() => handleCustomSubmitImportClearence(rowData)}>Accept</Button>
+            <Button variant="success" onClick={() => handleCustomSubmitImportClearence(rowData)}>Accept</Button>
             </td>
             <td>
-            <Button onClick={() => handleCustomSubmitImportClearence(rowData)}>Reject</Button>
+            <Button variant ="danger" onClick={() => handleCustomSubmitImportClearence(rowData)}>Reject</Button>
 
             </td>
           </tr>

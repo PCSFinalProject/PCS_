@@ -11,7 +11,7 @@ import api from '../../service/api';
 import UserData from '../../components/UserData';
 import { setUserData } from '../../functions/setUserData';
 import { Tab, Nav } from 'react-bootstrap';
-const TrafficDept = () => {
+const CargoHandling = () => {
 
     const navigate = useNavigate();
     const [cookies, setCookie, removeCookie] = useCookies();
@@ -213,10 +213,13 @@ const TrafficDept = () => {
           <Nav.Link eventKey="tab1">Manage Port</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="tab2">BERTH ALLOCATION</Nav.Link>
+          <Nav.Link eventKey="tab2">Unloading Ship</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="tab3">Request EXIT BERTH</Nav.Link>
+          <Nav.Link eventKey="tab4">Loading Ship</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="tab3">Update  Status</Nav.Link>
         </Nav.Item>
       </Nav>
       <Tab.Content>
@@ -319,7 +322,7 @@ const TrafficDept = () => {
             <td>{rowData.destination}</td>
             <td>{rowData.status}</td>
             <td>
-            <Button  variant="primary" onClick={() => handleCustomSubmitBerthAllocation(rowData)}>BERTH</Button>
+            <Button  variant="primary" onClick={() => handleCustomSubmitBerthAllocation(rowData)}>Accept</Button>
             </td>
             
           </tr>
@@ -328,6 +331,38 @@ const TrafficDept = () => {
     </Table>
    
         </Tab.Pane>
+        <Tab.Pane eventKey="tab4">
+       
+       <Table>
+     <thead>
+       <tr>
+         <th>ID</th>
+         <th>Name</th>
+         <th>Cargo</th>
+         <th>Destination</th>
+           <th>status</th>
+         <th>Action</th>
+     
+       </tr>
+     </thead>
+     <tbody>
+       {data.map((rowData) => (
+         <tr key={rowData.id}>
+           <td>{rowData.id}</td>
+           <td>{rowData.name}</td>
+           <td>{rowData.cargo}</td>
+           <td>{rowData.destination}</td>
+           <td>{rowData.status}</td>
+           <td>
+           <Button  variant="primary" onClick={() => handleCustomSubmitBerthAllocation(rowData)}>Accept</Button>
+           </td>
+           
+         </tr>
+       ))}
+     </tbody>
+   </Table>
+  
+       </Tab.Pane>
         <Tab.Pane eventKey="tab3">
         <Table>
       <thead>
@@ -337,7 +372,7 @@ const TrafficDept = () => {
           <th>Cargo</th>
           <th>Destination</th>
             <th>status</th>
-          <th>Action</th>
+          <th>Update</th>
       
         </tr>
       </thead>
@@ -350,7 +385,7 @@ const TrafficDept = () => {
             <td>{rowData.destination}</td>
             <td>{rowData.status}</td>
             <td>
-            <Button  variant="warning"onClick={() => handleCustomSubmitBerthAllocation(rowData)} >Request</Button>
+            <Button  variant="success"onClick={() => handleCustomSubmitBerthAllocation(rowData)} >Update</Button>
             </td>
             
           </tr>
@@ -365,4 +400,4 @@ const TrafficDept = () => {
     );
 }
 
-export default TrafficDept;
+export default CargoHandling;

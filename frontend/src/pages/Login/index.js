@@ -133,10 +133,11 @@ const Login = () => {
             <Form.Label>Role</Form.Label>
             <Form.Control as="select" value={userType} onChange={handleRadio}>
               <option value="">Select an option</option>
-              <option value={"client"}>Custom Officer</option>
+              <option value={"customOfficer"}>Custom Officer</option>
               <option value={"fi"}>Port Autority</option>
-              <option value={"ShipAgency"}>Ship Agency</option>
-              <option value= {"TrafficDept"}>Marine Department</option>
+              <option value={"shipAgency"}>Ship Agency</option>
+              <option value= {"trafficDept"}>Marine Department</option>
+              <option value= {"cargoHandling"}>Ship Owner</option>
             </Form.Control>
           </Form.Group>
           
