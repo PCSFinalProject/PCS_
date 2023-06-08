@@ -76,7 +76,7 @@ const Login = () => {
         if (validated && isLoading) {
             try {
                 api
-                    .post(`/${userType}/login`, qs.stringify({ login, password, userType }))
+                    .post(`/${'client'}/login`, qs.stringify({ login, password, userType }))
                     .then(res => {
                         if (res.status === 200) {
 

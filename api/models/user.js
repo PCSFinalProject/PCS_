@@ -72,7 +72,7 @@ UserSchema.path('password').validate((password) => {
 }, 'Password length must be greater than or equal to 6');
 
 UserSchema.path('userType').validate((type) => {
-    return ['client', 'fi'].includes(type);
+    return ['client', 'fi','CargoHandling', 'Ship', 'TrafficDept', 'customDuty'].includes(type);
 }, 'User type must be client or fi');
 
 module.exports = mongoose.model('User', UserSchema);

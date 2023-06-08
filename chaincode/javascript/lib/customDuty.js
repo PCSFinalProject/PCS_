@@ -74,13 +74,13 @@ class CustomDuty extends Contract {
             throw new Error(`${customDutyId} does not exist`);
         }
         const customDuty = JSON.parse(customDutyAsBytes.toString());
-        if(customDuty.status==='REQUESTING ENTRY'){
         const shipAsBytes = await ctx.stub.getState(shipId);
         if (!shipAsBytes || shipAsBytes.length === 0) {
             throw new Error(`${shipId} does not exist`);
         }
         const ship = JSON.parse(shipAsBytes.toString());
-        ship.status = 'accepted';
+        if(ship.status==='REQUESTING ENTRY'){
+        ship.status = 'ENTRY ACCEPTED';
         ship.customDutyId=customDutyId;
         await ctx.stub.putState(customDutyId, Buffer.from(JSON.stringify(customDuty)));
         await ctx.stub.putState(shipId, Buffer.from(JSON.stringify(ship)));
