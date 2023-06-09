@@ -68,8 +68,8 @@ const rejectExitShip = async (req, res) => {
 
 const acceptImportClearance = async (req, res) => {
     try{
-    const { shipId } = req.body;
-    const ship = await customDutyService.acceptImportClearance(shipId);
+    const { shipId ,portId} = req.body;
+    const ship = await customDutyService.approveImportClearance(shipId,portId);
     res.status(200).json(ship);
     }catch(err){
         res.status(500).json(err);
@@ -78,8 +78,8 @@ const acceptImportClearance = async (req, res) => {
 
 const acceptExportClearance = async (req, res) => {
     try{
-    const { shipId } = req.body;
-    const ship = await customDutyService.acceptExportClearance(shipId);
+    const { shipId,portId } = req.body;
+    const ship = await customDutyService.approveExportClearance(shipId, portId);
     res.status(200).json(ship);
     }catch(err){
         res.status(500).json(err);
@@ -107,8 +107,8 @@ const rejectExportClearance = async (req, res) => {
 
 const getImportClearancePort = async (req, res) => {
     try{
-    const { portID } = req.params;
-    const ships = await customDutyService.getImportClearancePort(portID);
+    const { portID,type} = req.params;
+    const ships = await customDutyService.getImportClearancePort(portID,type);
     res.status(200).json(ships);
     }catch(err){
         res.status(500).json(err);
@@ -117,8 +117,8 @@ const getImportClearancePort = async (req, res) => {
 
 const getExportClearancePort = async (req, res) => {
     try{
-    const { portID } = req.params;
-    const ships = await customDutyService.getExportClearancePort(portID);
+    const { portID ,type} = req.params;
+    const ships = await customDutyService.getExportClearancePort(portID,type);
     res.status(200).json(ships);
     }catch(err){
         res.status(500).json(err);

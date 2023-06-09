@@ -29,12 +29,56 @@ const ShipAgency = () => {
     const [selectedOptionShip, setSelectedOptionShip] = useState('');
       const [selectedOption, setSelectedOption] = useState('');
         const [selectedOptionShipExit, setSelectedOptionShipExit] = useState('');
+        const [shipListEntry, setShipListEntry] = useState([]);
+        const [shipListExit, setShipListExit] = useState([]);
+        const [portId, setPortId] = useState('');
+        const [portList, setPortList] = useState([]);
 
+        const [formData, setFormData] = useState({
+            id: '',
+            name: '',
+            type: '',
+            capacity: '',
+            cargo: '',
+            destination: '',
+            status: '',
+            berthId: '',
+            customsCleared: false,
+            unloading: false,
+            country: '',
+            portId: '',
+          });
+        
+          const handleInputChangeShip = (event) => {
+            const { name, value } = event.target;
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              [name]: value,
+            }));
+          };
 
       // This is Request Entry
-      const handleRequestEntry = (event) => {
+      const handleRequestEntry = async (event) => {
+          console.log('Selected Option:', selectedOption);
+            await axios.post('http://localhost:5000/shipAgency/request/entry', qs.stringify({
+                shipId: selectedOption,
+                shipAgencyId: cookies.userData.id,
+                portId: portId,
+            }), {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            }).then((response) => {
+                console.log(response);
+                if (response.data.message) {
+                    setApprovedMsg(response.data.message);
+                }
+            }).catch((error) => {
+                console.log(error);
+            });
+
+
         event.preventDefault();
-        console.log('Selected Option:', selectedOption);
         };
 
 
@@ -45,12 +89,34 @@ const ShipAgency = () => {
         setSelectedOptionShip(event.target.value);
       };
     
-      const handleOptionChangeRequestExit = (event) => {
-          setSelectedOptionShipExit(event.target.value);
+      const handleOptionChangeRequestExit = async(event) => {
+        setSelectedOptionShipExit(event.target.value);
+     
+
+         
         };
-        const handleRequestExist = (event) => {
-            event.preventDefault();
+        const handleRequestExist = async(event) => {
             console.log('Selected Option:', selectedOptionShipExit);
+        
+            await axios.post('http://localhost:5000/shipAgency/request/entry', qs.stringify({
+                shipId: selectedOptionShipExit,
+                shipAgencyId: cookies.userData.id,
+          }), {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        }).then((response) => {
+            console.log(response);
+            if (response.data.message) {
+                setApprovedMsg(response.data.message);
+            } else {
+                setApprovedMsg('Error');
+            }
+        }).catch((error) => {
+            console.log(error);
+            setApprovedMsg('Error');
+        });
+        event.preventDefault();
             };
 
         
@@ -59,11 +125,29 @@ const ShipAgency = () => {
         };
      
     
-      const handleSubmit = (event) => {
-        event.preventDefault();
+      const handleSubmit = async (event) => {
+   
     
         // Perform form submission logic here
         console.log('Selected Option:', selectedOption);
+        await axios.post('http://localhost:5000/shipAgency/create/ship', qs.stringify({
+            ...formData, shipAgencyId : cookies.user.id}, {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        })).then((response) => {
+            console.log(response);
+            if (response.data.message) {
+                setApprovedMsg(response.data.message);
+            } else {
+                setApprovedMsg('Error');
+            }
+        }).catch((error) => {
+            console.log(error);
+            setApprovedMsg('Error');
+        });
+        event.preventDefault();
+
       
     
         // Reset form fields
@@ -77,26 +161,7 @@ const ShipAgency = () => {
       setActiveTab(selectedTab);
     };
     // This is Ship create Tab 
-    const [formData, setFormData] = useState({
-        id: '',
-        name: '',
-        type: '',
-        size: '',
-        cargo: '',
-        destination: '',
-        status: '',
-        berthId: '',
-        customsCleared: false,
-        unloading: false,
-      });
-    
-      const handleInputChangeShip = (event) => {
-        const { name, value } = event.target;
-        setFormData((prevFormData) => ({
-          ...prevFormData,
-          [name]: value,
-        }));
-      };
+  
     
 
 
@@ -139,6 +204,50 @@ const ShipAgency = () => {
             return function cleanup() { }
         }
     }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            // Make the appropriate API request based on the activeTab value
+            let response=null,response1=null;
+            if (activeTab === 'tab1') {
+          
+            } else if (activeTab === 'tab2') {
+             
+            } else if (activeTab === 'tab3') {
+              response = await api.get('http://localhost:5000/shipAgency/entry/requests/:shipAgencyId');
+            //   response1 = await api.get('http://localhost:5000/fi/getAllPorts');
+            } else if (activeTab === 'tab4') {
+              response = await api.get('http://localhost:5000/shipAgency/exit/requests/:shipAgencyId');
+            }
+    
+            // Process the response data
+            if (response && response.status === 200) {
+              const responseData = response.data;
+              // Update the necessary state variables with the response data
+              // ...
+              if(activeTab === 'tab3'){
+                setShipListEntry(responseData);
+                if(response1 && response1.status === 200){
+                    const responseData1 = response1.data;
+                    setPortList(responseData1);
+                }
+                }else if(activeTab === 'tab4'){
+                    setShipListExit(responseData);
+                }
+            } else {
+              console.log('Oopps... something went wrong, status code ' + response?.status);
+            }
+          } catch (error) {
+            console.log('Oopps... something went wrong');
+            console.log(error);
+          }
+        };
+    
+        fetchData();
+      }, [activeTab]);
+
+
 
     useEffect(() => {
         if (isLoadingApprove) {
@@ -272,7 +381,7 @@ const ShipAgency = () => {
                     <UserData userData={clientData} />
                 </Card>
 
-                <Tab.Container activeKey={activeTab} onSelect={handleTabSelect}>
+                <Tab.Container activeKey={activeTab} defaultActiveKey={activeTab} onSelect={handleTabSelect}>
       <Nav variant="tabs">
         <Nav.Item>
           <Nav.Link eventKey="tab1">Manage Port</Nav.Link>
@@ -367,17 +476,20 @@ const ShipAgency = () => {
         <Tab.Pane eventKey="tab2">
         <Form onSubmit={handleSubmit}>
     <Flex flexWrap="wrap">
-        <Field label=" SHIP ID" width={[1, 1/2]} pr={[0, 2]}>
-        <Input name="id" value={formData.id} onChange={handleInputChangeShip} required />
-      </Field>
       <Field label="Name" width={[1, 1/2]} pr={[0, 2]}>
         <Input name="name" value={formData.name} onChange={handleInputChangeShip} required />
+      </Field>
+        <Field label=" COUNTRY" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="country" value={formData.id} onChange={handleInputChangeShip} required />
       </Field>
       <Field label="Type" width={[1, 1/2]} pr={[0, 2]}>
         <Input name="type" value={formData.type} onChange={handleInputChangeShip} required/>
       </Field>
-      <Field label="Size" width={[1, 1/2]} pr={[0, 2]}>
-        <Input name="size" value={formData.size} onChange={handleInputChangeShip} required/>
+      <Field label="capacity" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="capacity" value={formData.size} onChange={handleInputChangeShip} required/>
+      </Field>
+      <Field label="captain" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="captain" value={formData.size} onChange={handleInputChangeShip} required/>
       </Field>
       <Field label="Cargo" width={[1, 1/2]} pr={[0, 2]}>
         <Input name="cargo" value={formData.cargo} onChange={handleInputChangeShip} required/>
@@ -397,6 +509,9 @@ const ShipAgency = () => {
         <Field label="Port" width={1}>
         <Select value={selectedOption} onChange={handleOptionChangePort} required>
           <option value="">Select an option</option>
+          {approvedFiList.map((fi) => (
+            <option value={fi._id}>{fi.name}</option>
+            ))}
           <option value="option1">Port 1</option>
           <option value="option2"> Port 2</option>
           <option value="option3">Port 3</option>
@@ -405,6 +520,9 @@ const ShipAgency = () => {
       <Field label="Ship" width={1}>
         <Select value={selectedOption} onChange={handleOptionChangeShipEntry} required>
             <option value="">Select an option</option>
+            {shipListEntry.map((ship) => (
+                <option value={ship._id}>{ship.name}</option>
+            ))}
             <option value="option1">Ship 1</option>
             <option value="option2">Ship 2</option>
             <option value="option3">Ship 3</option>
@@ -421,6 +539,9 @@ const ShipAgency = () => {
         <Field label="Ship" width={1}>
         <Select value={selectedOption} onChange={handleOptionChangeRequestExit} required>
             <option value="">Select an option</option>
+            {shipListExit.map((ship) => (
+                <option value={ship._id}>{ship.name}</option>
+            ))}
             <option value="option1">Ship 1</option>
             <option value="option2">Ship 2</option>
             <option value="option3">Ship 3</option>

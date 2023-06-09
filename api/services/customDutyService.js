@@ -61,9 +61,9 @@ const rejectExitShip = async (shipId, portId) => {
     }
 }
 
-const getImportClearancePort = async (portId) => {
+const getImportClearancePort = async (portId,type) => {
     try{
-        const ships = await customOfficer.getImportClearancePort(portId);
+        const ships = await customOfficer.getImportClearancePort(portId,type);
         return ships;
     }catch(err){
         console.log(err.message);
@@ -71,9 +71,9 @@ const getImportClearancePort = async (portId) => {
     }
 }
 
-const getExportClearancePort = async (portId) => {
+const getExportClearancePort = async (portId,type) => {
     try{
-        const ships = await customOfficer.getExportClearancePort(portId);
+        const ships = await customOfficer.getExportClearancePort(portId,type);
         return ships;
     }catch(err){
         console.log(err.message);
@@ -81,9 +81,9 @@ const getExportClearancePort = async (portId) => {
     }
 }
 
-const approveImportClearance = async (shipId, portId) => {
+const approveImportClearance = async (shipId) => {
     try{
-        const ship = await customOfficer.approveImportClearance(shipId, portId);
+        const ship = await customOfficer.approveImportClearance(shipId);
         return ship;
     }catch(err){
         console.log(err.message);
@@ -91,9 +91,9 @@ const approveImportClearance = async (shipId, portId) => {
     }
 }
 
-const approveExportClearance = async (shipId, portId) => {
+const approveExportClearance = async (shipId) => {
     try{
-        const ship = await customOfficer.approveExportClearance(shipId, portId);
+        const ship = await customOfficer.approveExportClearance(shipId);
         return ship;
     }catch(err){
         console.log(err.message);
@@ -101,9 +101,9 @@ const approveExportClearance = async (shipId, portId) => {
     }
     }
 
-const rejectImportClearance = async (shipId, portId) => {
+const rejectImportClearance = async (shipId) => {
     try{
-        const ship = await customOfficer.rejectImportClearance(shipId, portId);
+        const ship = await customOfficer.rejectImportClearance(shipId);
         return ship;
     }catch(err){
         console.log(err.message);
@@ -111,9 +111,9 @@ const rejectImportClearance = async (shipId, portId) => {
     }
 }
 
-const rejectExportClearance = async (shipId, portId) => {
+const rejectExportClearance = async (shipId) => {
     try{
-        const ship = await customOfficer.rejectExportClearance(shipId, portId);
+        const ship = await customOfficer.rejectExportClearance(shipId);
         return ship;
     }catch(err){
         console.log(err.message);

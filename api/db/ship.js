@@ -15,7 +15,7 @@ const createShip = async (shipId, name, country, captain, capacity, type, cargo,
 const requestEntryShip = async (shipId, portId) => {
     try{
     // update the ship status to pending and portId to the portId passed in the request
-    const ship = await Ship.findOneAndUpdate({shipId}, {status: 'pending', portId});
+    const ship = await Ship.findOneAndUpdate({shipId}, {status: 'PENDING', portId});
     return ship;
     }catch(err){
         console.log(err.message);
@@ -23,10 +23,10 @@ const requestEntryShip = async (shipId, portId) => {
     }
 }
 
-const requestExitShip = async (shipId, portId) => {
+const requestExitShip = async (shipId, shipAgencyId) => {
     try{
     // find the ship status to completed and portId to the portId passed in the request
-        const ship = await Ship.findOne({shipId, portId, status:{ $in: ['COMPLETED','UNLOADED'] }});
+        const ship = await Ship.findOne({shipId, shipAgencyId, status:{ $in: ['COMPLETED','UNLOADED'] }});
         if(!ship){
             throw new Error('Ship not found');
         }
@@ -43,7 +43,7 @@ const requestExitShip = async (shipId, portId) => {
 const getEntryRequests = async (shipAgencyId) => {
     try{
     // find all the ships with status as pending and shipAgencyId as the shipAgencyId passed in the request
-    const ships = await Ship.find({status:'pending',shipAgencyId});
+    const ships = await Ship.find({status:'PENDING',shipAgencyId});
     return ships;
     }catch(err){
         console.log(err.message);
@@ -54,7 +54,7 @@ const getEntryRequests = async (shipAgencyId) => {
 const getExitRequests = async (shipAgencyId) => {
     try{
     // find all the ships with status as completed and shipAgencyId as the shipAgencyId passed in the request
-    const ships = await Ship.find({status:{ $in: ['completed','unloaded'] },shipAgencyId});
+    const ships = await Ship.find({status:{ $in: ['COMPLETED','UNLOADED'] },shipAgencyId});
     return ships;
     }catch(err){
         console.log(err.message);

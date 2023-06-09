@@ -24,11 +24,68 @@ const CustomOfficer = () => {
     const [removedMsg, setRemovedMsg] = useState('');
     const [isLoadingRemove, setIsLoadingRemove] = useState(false);
     const [activeTab, setActiveTab] = useState(0);
+    const [importClearenceData, setImportClearenceData] = useState([]);
+    const [exportClearenceData, setExportClearenceData] = useState([]);
     
 
-    const handleCustomSubmitImportClearence = (index) => {
-      setActiveTab(index);
+    const handleCustomSubmitImportClearenceAccept = async(rowData) => {
+        await axios.post(`http://localhost:5000/customOfficer/approveImport`, {
+           ...rowData
+           ,shipId:rowData.id,
+           id: cookies.id
+    })
+    .then(res => {
+        console.log(res);
+        console.log(res.data);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+
     };
+    const handleCustomSubmitImportClearenceReject = async(rowData) => {
+        await axios.post(`http://localhost:5000/customOfficer/rejectImport`, {
+              ...rowData
+                ,shipId:rowData.id,
+                id: cookies.id
+        })
+        .then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    };
+    const handleCustomSubmitExportClearenceAccept = async(rowData) => {
+        await axios.post(`http://localhost:5000/customOfficer/approveExport`, {
+              ...rowData,
+                shipId:rowData.id,
+                id: cookies.id
+        })
+        .then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    };
+    const handleCustomSubmitExportClearenceReject = async(rowData) => {
+        await axios.post(`http://localhost:5000/customOfficer/rejectExport`, {
+                ...rowData,
+                shipId:rowData.id,
+                id: cookies.id
+        })
+        .then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    };
+
     function handleChooseFiApprove(e) {
         setFiIdApprove(e.target.value.toUpperCase());
     };
@@ -74,6 +131,48 @@ const CustomOfficer = () => {
             return function cleanup() { }
         }
     }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            // Make the appropriate API request based on the activeTab value
+            let response=null;
+            if (activeTab === 'tab1') {
+          
+            }  else if (activeTab === 'tab2') {
+               response = await axios.get(`http://localhost:5000/customOfficer/ImportClearance/${cookies.user.id}/IMPORT`);
+              setImportClearenceData(mockData)
+            //   response1 = await api.get('http://localhost:5000/fi/getAllPorts');
+            } else if (activeTab === 'tab3') {
+              response = await axios.get(`http://localhost:5000/customOfficer/ExportClearance/${cookies.user.id}/EXPORT`);
+            }
+    
+            // Process the response data
+            if (response && response.status === 200) {
+              const responseData = response.data;
+              // Update the necessary state variables with the response data
+              // ...
+              if(activeTab === 'tab2'){
+                setImportClearenceData(responseData);
+                
+                
+                }else if(activeTab === 'tab3'){
+                    setExportClearenceData(responseData);
+                }
+            } else {
+              console.log('Oopps... something went wrong, status code ' + response?.status);
+            }
+          } catch (error) {
+            console.log('Oopps... something went wrong');
+            console.log(error);
+          }
+        };
+    
+        fetchData();
+      }, [activeTab,cookies,fiIdApprove]);
+
+
+
 
     useEffect(() => {
         if (isLoadingApprove) {
@@ -304,24 +403,24 @@ const CustomOfficer = () => {
           <th>Name</th>
           <th>Cargo</th>
           <th>Destination</th>
-            <th>status</th>
+            <th>country</th>
           <th>Action</th>
           <th>Reject</th>
         </tr>
       </thead>
       <tbody>
-        {data.map((rowData) => (
+        {importClearenceData.map((rowData) => (
           <tr key={rowData.id}>
             <td>{rowData.id}</td>
             <td>{rowData.name}</td>
             <td>{rowData.cargo}</td>
             <td>{rowData.destination}</td>
-            <td>{rowData.status}</td>
+            <td>{rowData.country}</td>
             <td>
-            <Button variant="success" onClick={() => handleCustomSubmitImportClearence(rowData)}>Accept</Button>
+            <Button variant="success" onClick={() => handleCustomSubmitImportClearenceAccept(rowData)}>Accept</Button>
             </td>
             <td>
-            <Button variant="danger" onClick={() => handleCustomSubmitImportClearence(rowData)}>Reject</Button>
+            <Button variant="danger" onClick={() => handleCustomSubmitImportClearenceReject(rowData)}>Reject</Button>
 
             </td>
           </tr>
@@ -337,24 +436,24 @@ const CustomOfficer = () => {
           <th>Name</th>
           <th>Cargo</th>
           <th>Destination</th>
-            <th>status</th>
+            <th>country</th>
           <th>Accept</th>
           <th>Reject</th>
         </tr>
       </thead>
       <tbody>
-        {data.map((rowData) => (
+        {exportClearenceData.map((rowData) => (
           <tr key={rowData.id}>
             <td>{rowData.id}</td>
             <td>{rowData.name}</td>
             <td>{rowData.cargo}</td>
             <td>{rowData.destination}</td>
-            <td>{rowData.status}</td>
+            <td>{rowData.country}</td>
             <td>
-            <Button variant="success" onClick={() => handleCustomSubmitImportClearence(rowData)}>Accept</Button>
+            <Button variant="success" onClick={() => handleCustomSubmitExportClearenceAccept(rowData)}>Accept</Button>
             </td>
             <td>
-            <Button variant ="danger" onClick={() => handleCustomSubmitImportClearence(rowData)}>Reject</Button>
+            <Button variant ="danger" onClick={() => handleCustomSubmitExportClearenceReject(rowData)}>Reject</Button>
 
             </td>
           </tr>

@@ -23,8 +23,8 @@ const requestEntryShip = async (req, res) => {
 
 const requestExitShip = async (req, res) => {
     try{
-    const { shipId, portId } = req.body;
-    const ship = await shipAgencyService.requestExitShip(shipId, portId);
+    const { shipId ,shipAgencyId} = req.body;
+    const ship = await shipAgencyService.requestExitShip(shipId,shipAgencyId);
     res.status(200).json(ship);
     }catch(err){
         res.status(500).json(err);

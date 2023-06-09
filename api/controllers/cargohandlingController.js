@@ -38,10 +38,21 @@ const getLoadedRequests = async (req, res) => {
         res.status(500).json(err);
     }
 }
+const updateStatus = async (req, res) => {
+    try{
+    const { shipId, status } = req.body;
+    const ship = await cargoHandlingService.completed(shipId);
+    res.status(200).json(ship);
+    }catch(err){
+        res.status(500).json(err);
+    }
+}
+
 
 module.exports = {
     unloaded,
     loaded,
     getUnloadedRequests,
-    getLoadedRequests
+    getLoadedRequests,
+    updateStatus
 }

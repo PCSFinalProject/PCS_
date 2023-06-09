@@ -29,6 +29,8 @@ const TrafficDept = () => {
  
     // Import Clearence Tab
     const [data,setData] = useState(mockData);
+    const [berthAllocationData,setBerthAllocationData] = useState([]);
+    const [berthReuestData,setBerthReuestData] = useState([]);
     
     const handleTabSelect = (selectedTab) => {
       setActiveTab(selectedTab);
@@ -74,6 +76,46 @@ const TrafficDept = () => {
             return function cleanup() { }
         }
     }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            // Make the appropriate API request based on the activeTab value
+            let response;
+            if (activeTab === 'tab1') {
+          
+            } else if (activeTab === 'tab2') {
+                response = await api.get('http://localhost:5000/trafficDept/berth/requests/:portId');
+                setBerthReuestData(mockData);
+
+            } else if (activeTab === 'tab3') {
+                response = await api.get('http://localhost:5000/trafficDept/berth/allocated/:portId');
+            } 
+    
+            // Process the response data
+            if (response && response.status === 200) {
+              const responseData = response.data;
+              // Update the necessary state variables with the response data
+              // ...
+              if(activeTab === 'tab2'){
+                setBerthReuestData(response.data);
+                console.log(berthReuestData);
+                }else if(activeTab === 'tab3'){
+                    setBerthAllocationData(response.data);
+                }
+
+            } else {
+              console.log('Oopps... something went wrong, status code ' + response?.status);
+            }
+          } catch (error) {
+            console.log('Oopps... something went wrong');
+            console.log(error);
+          }
+        };
+    
+        fetchData();
+      }, [activeTab]);
+
 
     useEffect(() => {
         if (isLoadingApprove) {
@@ -311,7 +353,7 @@ const TrafficDept = () => {
         </tr>
       </thead>
       <tbody>
-        {data.map((rowData) => (
+        {berthReuestData.map((rowData) => (
           <tr key={rowData.id}>
             <td>{rowData.id}</td>
             <td>{rowData.name}</td>
@@ -342,7 +384,7 @@ const TrafficDept = () => {
         </tr>
       </thead>
       <tbody>
-        {data.map((rowData) => (
+        {berthAllocationData.map((rowData) => (
           <tr key={rowData.id}>
             <td>{rowData.id}</td>
             <td>{rowData.name}</td>

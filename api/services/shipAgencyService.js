@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
 const networkConnection = require('../utils/networkConnection');
-const Ship = require('../models/ship');
+const Ship = require('../db/ship');
 
 
 const createShip = async (name, country, captain, capacity, type, cargo) => {
@@ -27,10 +27,10 @@ const requestEntryShip = async (shipId, portId) => {
     }
 }
 
-const requestExitShip = async (shipId, portId) => {
+const requestExitShip = async (shipId, shipAgencyId) => {
     try {
         // const ship = await networkConnection.requestExitShip(shipId, portId);
-        const ship = await Ship.requestExitShip(shipId, portId);
+        const ship = await Ship.requestExitShip(shipId, shipAgencyId);
         return ship;
     } catch (err) {
         throw err;

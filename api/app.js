@@ -9,7 +9,10 @@ const cookieParser = require('cookie-parser');
 
 const clientRouter = require('./routes/client');
 const financialInstitutionRouter = require('./routes/financialInstitution');
-const shipAgency = require('./routes/shipAgency');
+const customRouter = require('./routes/customOfficer');
+const cargoRouter = require('./routes/cargoHandling');
+const shipRouter = require('./routes/shipAgency');
+const trafficDeptRouter = require('./routes/trafficDept');
 
 const app = express();
 
@@ -26,10 +29,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// app.use('/client', clientRouter);
-// app.use('/fi', financialInstitutionRouter);
-// app.use('/customOfficer', customOfficer)
-app.use('/shipAgency', shipAgency);
+app.use('/client', clientRouter);
+app.use('/fi', financialInstitutionRouter);
+app.use('/customOfficer', customRouter);
+app.use('/cargoHandling', cargoRouter);
+app.use('/shipAgency',shipRouter);
+app.use('/trafficDept', trafficDeptRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

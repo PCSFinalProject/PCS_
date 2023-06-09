@@ -1,8 +1,8 @@
 const Ship = require('../db/ship');
 
-const unloaded = async (shipId, portId) => {
+const unloaded = async (shipId) => {
     try{
-        const ship = await Ship.findOne({shipId, portId, status: 'REQUESTING EXIT'});
+        const ship = await Ship.findOne({shipId});
         if(!ship){
             throw new Error('Ship not found');
         }
@@ -15,9 +15,9 @@ const unloaded = async (shipId, portId) => {
     }
 }
 
-const loaded = async (shipId, portId) => {
+const loaded = async (shipId) => {
     try{
-        const ship = await Ship.findOne({shipId, portId, status: 'PENDING'});
+        const ship = await Ship.findOne({shipId});
         if(!ship){
             throw new Error('Ship not found');
         }
@@ -30,9 +30,9 @@ const loaded = async (shipId, portId) => {
     }
 }
 
-const completed = async (shipId, portId) => {
+const completed = async (shipId) => {
     try{
-        const ship = await Ship.findOne({shipId, portId, status: 'REQUESTING EXIT'});
+        const ship = await Ship.findOne({shipId, status: 'REQUESTING EXIT'});
         if(!ship){
             throw new Error('Ship not found');
         }
@@ -47,7 +47,7 @@ const completed = async (shipId, portId) => {
 
 const getUnloadedRequests = async (portId) => {
     try{
-        const ships = await Ship.find({status: 'REQUESTING EXIT', portId});
+        const ships = await Ship.find({status: {$in:['ULOADING','REQUESTING EXIT']}, portId});
         return ships;
     }catch(err){
         console.log(err.message);
@@ -57,7 +57,7 @@ const getUnloadedRequests = async (portId) => {
 
 const getLoadedRequests = async (portId) => {
     try{
-        const ships = await Ship.find({status: 'PENDING', portId});
+        const ships = await Ship.find({status: {$in : ['LOADING','REQUESTING EXIT']}, portId});
         return ships;
     }catch(err){
         console.log(err.message);
@@ -70,6 +70,7 @@ module.exports = {
     loaded,
     completed,
     getUnloadedRequests,
-    getLoadedRequests
+    getLoadedRequests,
+    completed
 }
 

@@ -25,6 +25,9 @@ const CargoHandling = () => {
     const [removedMsg, setRemovedMsg] = useState('');
     const [isLoadingRemove, setIsLoadingRemove] = useState(false);
     const [activeTab, setActiveTab] = useState('tab1');
+    const [uloadingData,setUloadingData] = useState([]);
+    const [loadingData,setLoadingData] = useState([]);
+    const [statusUpdatedData,setStatusUpdatedData] = useState([]);
     
  
     // Import Clearence Tab
@@ -40,11 +43,104 @@ const CargoHandling = () => {
     function handleChooseFiRemove(e) {
         setFiIdRemove(e.target.value.toUpperCase());
     };
-    function handleCustomSubmitBerthAllocation  (e) {
-        e.preventDefault();
-        console.log("Submitted");
-        console.log(data);
+    async function handleUnloadingAcceptRequest  (data) {
+        await axios.post('http://localhost:5000/cargoHandling/unloaded/', qs.stringify({ unloadRequestId: data.unloadRequestId }))
+            .then(res => {
+                if (res.status === 200) {
+                    setUloadingData(res.data);
+                } else {
+                    console.log('Oopps... something wrong, status code ' + res.status);
+                }
+            })
+            .catch((err) => {
+                console.log('Oopps... something wrong');
+                console.log(err);
+            });
+            data.preventDefault();
     };
+
+  
+
+    const  handlingloadingRequest = async (data) => {
+        await axios.post('http://localhost:5000/cargoHandling/loaded', qs.stringify({ ...data, shipId: cookies.shipId }))
+            .then(res => {
+                if (res.status === 200) {
+                    setLoadingData(res.data);
+                } else {
+                    console.log('Oopps... something wrong, status code ' + res.status);
+                }
+            })
+            .catch((err) => {
+                console.log('Oopps... something wrong');
+                console.log(err);
+            });
+
+        data.preventDefault();
+
+    };
+
+    const handleStatusUpdate = async (data) => {
+        await axios.post('http://localhost:5000/cargoHandling/updateStatus', qs.stringify({ ...data, shipId: cookies.shipId }))
+            .then(res => {
+                if (res.status === 200) {
+                    setStatusUpdatedData(res.data);
+                } else {
+                    console.log('Oopps... something wrong, status code ' + res.status);
+                }
+            })
+            .catch((err) => {
+                console.log('Oopps... something wrong');
+                console.log(err);
+            });
+        };
+
+
+
+
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            // Make the appropriate API request based on the activeTab value
+            let response;
+            if (activeTab === 'tab1') {
+          
+            } else if (activeTab === 'tab2') {
+              response = await axios.get(`http://localhost:5000/cargoHandling/unloadRequests/${cookies.fiId}`);
+            } else if (activeTab === 'tab3') {
+              response = await axios.get(`http://localhost:5000/cargoHandling/loadRequests/${cookies.fiId}`);
+            } else if (activeTab === 'tab4') {
+              response = await axios.get(`http://localhost:5000/cargoHandling/getLoadingShipData/${cookies.fiId}`);
+            }
+    
+            // Process the response data
+            if (response && response.status === 200) {
+              const responseData = response.data;
+              // Update the necessary state variables with the response data
+              // ...
+                if (activeTab === 'tab2') {
+                    setUloadingData(responseData);
+                }
+                else if (activeTab === 'tab3') {
+                    setLoadingData(responseData);
+                }
+                else if (activeTab === 'tab4') {
+                    setStatusUpdatedData(responseData);
+                }
+
+            } else {
+              console.log('Oopps... something went wrong, status code ' + response?.status);
+            }
+          } catch (error) {
+            console.log('Oopps... something went wrong');
+            console.log(error);
+          }
+        };
+    
+        fetchData();
+      }, [activeTab]);
+
     useEffect(() => {
         try {
             axios.all([
@@ -203,11 +299,11 @@ const CargoHandling = () => {
                     </Box>
                 </Flex>
                 <Card>
-                    <Heading as={'h2'}>Traffic / Marine Department data</Heading>
+                    <Heading as={'h2'}>Cargo Handling</Heading>
                     <UserData userData={clientData} />
                 </Card>
 
-                <Tab.Container activeKey={activeTab} onSelect={handleTabSelect}>
+                <Tab.Container defaultActiveKey="tab1" activeKey={activeTab} onSelect={handleTabSelect}>
       <Nav variant="tabs">
         <Nav.Item>
           <Nav.Link eventKey="tab1">Manage Port</Nav.Link>
@@ -314,7 +410,7 @@ const CargoHandling = () => {
         </tr>
       </thead>
       <tbody>
-        {data.map((rowData) => (
+        {uloadingData.map((rowData) => (
           <tr key={rowData.id}>
             <td>{rowData.id}</td>
             <td>{rowData.name}</td>
@@ -322,7 +418,7 @@ const CargoHandling = () => {
             <td>{rowData.destination}</td>
             <td>{rowData.status}</td>
             <td>
-            <Button  variant="primary" onClick={() => handleCustomSubmitBerthAllocation(rowData)}>Accept</Button>
+            <Button  variant="primary" onClick={() => handleUnloadingAcceptRequest(rowData)}>Accept</Button>
             </td>
             
           </tr>
@@ -330,6 +426,36 @@ const CargoHandling = () => {
       </tbody>
     </Table>
    
+        </Tab.Pane>
+        <Tab.Pane eventKey="tab3">
+        <Table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Cargo</th>
+          <th>Destination</th>
+            <th>status</th>
+          <th>Update</th>
+      
+        </tr>
+      </thead>
+      <tbody>
+        {loadingData.map((rowData) => (
+          <tr key={rowData.id}>
+            <td>{rowData.id}</td>
+            <td>{rowData.name}</td>
+            <td>{rowData.cargo}</td>
+            <td>{rowData.destination}</td>
+            <td>{rowData.status}</td>
+            <td>
+            <Button  variant="success"onClick={() => handlingloadingRequest(rowData)} >Update</Button>
+            </td>
+            
+          </tr>
+        ))}
+      </tbody>
+    </Table>
         </Tab.Pane>
         <Tab.Pane eventKey="tab4">
        
@@ -346,7 +472,7 @@ const CargoHandling = () => {
        </tr>
      </thead>
      <tbody>
-       {data.map((rowData) => (
+       {statusUpdatedData.map((rowData) => (
          <tr key={rowData.id}>
            <td>{rowData.id}</td>
            <td>{rowData.name}</td>
@@ -354,7 +480,7 @@ const CargoHandling = () => {
            <td>{rowData.destination}</td>
            <td>{rowData.status}</td>
            <td>
-           <Button  variant="primary" onClick={() => handleCustomSubmitBerthAllocation(rowData)}>Accept</Button>
+           <Button  variant="primary" onClick={() => handleStatusUpdate(rowData)}>Accept</Button>
            </td>
            
          </tr>
@@ -363,36 +489,7 @@ const CargoHandling = () => {
    </Table>
   
        </Tab.Pane>
-        <Tab.Pane eventKey="tab3">
-        <Table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Cargo</th>
-          <th>Destination</th>
-            <th>status</th>
-          <th>Update</th>
       
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((rowData) => (
-          <tr key={rowData.id}>
-            <td>{rowData.id}</td>
-            <td>{rowData.name}</td>
-            <td>{rowData.cargo}</td>
-            <td>{rowData.destination}</td>
-            <td>{rowData.status}</td>
-            <td>
-            <Button  variant="success"onClick={() => handleCustomSubmitBerthAllocation(rowData)} >Update</Button>
-            </td>
-            
-          </tr>
-        ))}
-      </tbody>
-    </Table>
-        </Tab.Pane>
       </Tab.Content>
     </Tab.Container>
             </Box>

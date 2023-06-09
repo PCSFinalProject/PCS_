@@ -23,7 +23,7 @@ const Login = () => {
     const [validated, setValidated] = useState(false);
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
-    const [userType, setUserType] = useState("client");
+    const [userType, setUserType] = useState("");
     const [submitDisabled, setSubmitDisabled] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [activeTab, setActiveTab] = useState(0);
@@ -76,7 +76,7 @@ const Login = () => {
         if (validated && isLoading) {
             try {
                 api
-                    .post(`/${'client'}/login`, qs.stringify({ login, password, userType }))
+                    .post(`/${userType}/login`, qs.stringify({ login, password, userType }))
                     .then(res => {
                         if (res.status === 200) {
 
@@ -135,9 +135,10 @@ const Login = () => {
               <option value="">Select an option</option>
               <option value={"customOfficer"}>Custom Officer</option>
               <option value={"fi"}>Port Autority</option>
+              <option value={"client"}>General client</option>
               <option value={"shipAgency"}>Ship Agency</option>
               <option value= {"trafficDept"}>Marine Department</option>
-              <option value= {"cargoHandling"}>Ship Owner</option>
+              <option value= {"cargoHandling"}>Cargo Handling</option>
             </Form.Control>
           </Form.Group>
           
