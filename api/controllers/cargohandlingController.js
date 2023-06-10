@@ -1,4 +1,4 @@
-const cargoHandlingService = require('../services/cargoHandlingService');
+const cargoHandlingService = require('../services/cargohandlingService');
 
 const unloaded = async (req, res) => {
     try{

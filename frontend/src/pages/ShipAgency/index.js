@@ -38,7 +38,7 @@ const ShipAgency = () => {
             id: '',
             name: '',
             type: '',
-            capacity: '',
+            capacity: 0,
             cargo: '',
             destination: '',
             status: '',
@@ -48,22 +48,22 @@ const ShipAgency = () => {
             country: '',
             portId: '',
           });
-        
           const handleInputChangeShip = (event) => {
             const { name, value } = event.target;
             setFormData((prevFormData) => ({
               ...prevFormData,
               [name]: value,
             }));
+            console.log(formData,"forData");
           };
 
       // This is Request Entry
       const handleRequestEntry = async (event) => {
           console.log('Selected Option:', selectedOption);
             await axios.post('http://localhost:5000/shipAgency/request/entry', qs.stringify({
-                shipId: selectedOption,
-                shipAgencyId: cookies.userData.id,
-                portId: portId,
+                shipId: selectedOptionShip,
+                shipAgencyId: cookies.ledgerId,
+                portId: selectedOption,
             }), {
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -98,9 +98,8 @@ const ShipAgency = () => {
         const handleRequestExist = async(event) => {
             console.log('Selected Option:', selectedOptionShipExit);
         
-            await axios.post('http://localhost:5000/shipAgency/request/entry', qs.stringify({
+            await api.post('/shipAgency/request/exit', qs.stringify({
                 shipId: selectedOptionShipExit,
-                shipAgencyId: cookies.userData.id,
           }), {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -125,33 +124,30 @@ const ShipAgency = () => {
         };
      
     
-      const handleSubmit = async (event) => {
+      const handleSubmit = async () => {
    
-    
+        console.log("formData",formData);
+        formData.shipAgencyId = cookies.ledgerId;
         // Perform form submission logic here
         console.log('Selected Option:', selectedOption);
-        await axios.post('http://localhost:5000/shipAgency/create/ship', qs.stringify({
-            ...formData, shipAgencyId : cookies.user.id}, {
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            }
-        })).then((response) => {
+         api.post('/shipAgency/create/ship', qs.stringify({
+            ...formData})).then((response) => {
             console.log(response);
-            if (response.data.message) {
-                setApprovedMsg(response.data.message);
+            if (response.data) {
+                console.log();
             } else {
-                setApprovedMsg('Error');
+               
+                console.log();
             }
         }).catch((error) => {
             console.log(error);
-            setApprovedMsg('Error');
         });
-        event.preventDefault();
+        // event.preventDefault();
 
       
     
-        // Reset form fields
-        setSelectedOption('');
+        // // Reset form fields
+        // setSelectedOption('');
       
       };
 
@@ -215,10 +211,10 @@ const ShipAgency = () => {
             } else if (activeTab === 'tab2') {
              
             } else if (activeTab === 'tab3') {
-              response = await api.get('http://localhost:5000/shipAgency/entry/requests/:shipAgencyId');
+              response = await axios.get(`http://localhost:5000/shipAgency/entry/requests/${cookies.ledgerId}`);
             //   response1 = await api.get('http://localhost:5000/fi/getAllPorts');
             } else if (activeTab === 'tab4') {
-              response = await api.get('http://localhost:5000/shipAgency/exit/requests/:shipAgencyId');
+              response = await axios.get(`http://localhost:5000/shipAgency/exit/requests/${cookies.ledgerId}`);
             }
     
             // Process the response data
@@ -474,19 +470,19 @@ const ShipAgency = () => {
                 </Card>
                 </Tab.Pane>
         <Tab.Pane eventKey="tab2">
-        <Form onSubmit={handleSubmit}>
+       
     <Flex flexWrap="wrap">
       <Field label="Name" width={[1, 1/2]} pr={[0, 2]}>
         <Input name="name" value={formData.name} onChange={handleInputChangeShip} required />
       </Field>
         <Field label=" COUNTRY" width={[1, 1/2]} pr={[0, 2]}>
-        <Input name="country" value={formData.id} onChange={handleInputChangeShip} required />
+        <Input name="country" value={formData.country} onChange={handleInputChangeShip} required />
       </Field>
       <Field label="Type" width={[1, 1/2]} pr={[0, 2]}>
         <Input name="type" value={formData.type} onChange={handleInputChangeShip} required/>
       </Field>
       <Field label="capacity" width={[1, 1/2]} pr={[0, 2]}>
-        <Input name="capacity" value={formData.size} onChange={handleInputChangeShip} required/>
+        <Input name="capacity" value={formData.capacity} type ="number" onChange={handleInputChangeShip} required/>
       </Field>
       <Field label="captain" width={[1, 1/2]} pr={[0, 2]}>
         <Input name="captain" value={formData.size} onChange={handleInputChangeShip} required/>
@@ -500,57 +496,49 @@ const ShipAgency = () => {
     
       </Flex>
       <Flex justifyContent="flex-end" mt={3}>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" onClick={handleSubmit}>Submit</Button>
       </Flex>
-    </Form>
+   
         </Tab.Pane >
         <Tab.Pane eventKey="tab3">
-        <Form onSubmit={handleRequestEntry}>
+      
         <Field label="Port" width={1}>
         <Select value={selectedOption} onChange={handleOptionChangePort} required>
           <option value="">Select an option</option>
           {approvedFiList.map((fi) => (
-            <option value={fi._id}>{fi.name}</option>
+            <option value={fi}>{fi}</option>
             ))}
-          <option value="option1">Port 1</option>
-          <option value="option2"> Port 2</option>
-          <option value="option3">Port 3</option>
         </Select>
       </Field>
       <Field label="Ship" width={1}>
         <Select value={selectedOption} onChange={handleOptionChangeShipEntry} required>
             <option value="">Select an option</option>
             {shipListEntry.map((ship) => (
-                <option value={ship._id}>{ship.name}</option>
+                <option value={ship.shipId}>{ship.name}</option>
             ))}
-            <option value="option1">Ship 1</option>
-            <option value="option2">Ship 2</option>
-            <option value="option3">Ship 3</option>
+         
         </Select>
         </Field>
         
       <Flex justifyContent="centre" mt={3}>
-        <Button type="submit">Request</Button>
+        <Button type="submit" onClick={handleRequestEntry}>Request</Button>
       </Flex>
-            </Form>
+         
         </Tab.Pane>
         <Tab.Pane eventKey="tab4">
-        <Form onSubmit={handleRequestExist}>
+ 
         <Field label="Ship" width={1}>
         <Select value={selectedOption} onChange={handleOptionChangeRequestExit} required>
             <option value="">Select an option</option>
             {shipListExit.map((ship) => (
-                <option value={ship._id}>{ship.name}</option>
+                <option value={ship.shipId}>{ship.name}</option>
             ))}
-            <option value="option1">Ship 1</option>
-            <option value="option2">Ship 2</option>
-            <option value="option3">Ship 3</option>
         </Select>
         </Field>
          <Flex justifyContent="centre" mt={4}>
-        <Button type="submit">Request</Button>
+        <Button type="submit" onClick={handleRequestExist}>Request</Button>
       </Flex>
-        </Form>
+
         </Tab.Pane>
 
 

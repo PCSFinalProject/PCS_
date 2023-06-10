@@ -9,26 +9,26 @@ const shipSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        required:true
+        // required:true
     },
     country: {
         type: String,
-        required:true
+        // required:true
     },
     captain: {
         type: String,
     },
     capacity: {
         type: Number,
-        required:true
+        // required:true
     },
     type: {
         type: String,
-        required:true
+        // required:true
     },
     cargo: {
         type: String,
-        required:true
+        // required:true
     },
     
 destination: {
@@ -40,7 +40,7 @@ destination: {
     },
     status: {
         type: String,
-        default: 'pending'
+        default: 'PENDING'
     },
     ledgerId: {
         type: String,
@@ -53,7 +53,7 @@ destination: {
     },
     shipAgencyId: {
         type: String,
-        required: true
+        // required: true
     }
     
 });

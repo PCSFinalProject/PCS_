@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const cargoHandlingController = require('../controllers/cargoHandlingController');
+const cargoHandlingController = require('../controllers/cargohandlingController');
 
 const clientController = require('../controllers/clientController');
 const {checkLogin} = require('../middleware/auth');

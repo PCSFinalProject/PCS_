@@ -1,15 +1,16 @@
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const uuid = require('uuid');
 
 const networkConnection = require('../utils/networkConnection');
 const Ship = require('../db/ship');
+let idvalue=Math.random();
 
-
-const createShip = async (name, country, captain, capacity, type, cargo) => {
+const createShip = async (name, country, captain, capacity, type, cargo,shipAgencyId) => {
     try {
-      const   shipId = UUID.v4();
+      const   shipId = uuid.v4();
         // const ship = await networkConnection.createShip(shipId, name, country, captain, capacity, type, cargo);
-        const ship = await Ship.create({shipId, name, country, captain, capacity, type, cargo});
+        const ship = await Ship.createShip(shipId, name, country, captain, capacity, type, cargo,shipAgencyId);
 
         return ship;
     } catch (err) {

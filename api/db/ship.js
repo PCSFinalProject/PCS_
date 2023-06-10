@@ -3,7 +3,7 @@ const Ship = require('../models/ship');
 
 const createShip = async (shipId, name, country, captain, capacity, type, cargo, shipAgencyId) => {
     try {
-        const ship = new Ship({ shipId, name, country, captain, capacity, type, cargo, shipAgencyId });
+        const ship = new Ship({ shipId, name, country, captain, capacity, type, cargo , shipAgencyId});
         await ship.save();
         return ship;
     } catch (err) {

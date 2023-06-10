@@ -44,7 +44,7 @@ const CargoHandling = () => {
         setFiIdRemove(e.target.value.toUpperCase());
     };
     async function handleUnloadingAcceptRequest  (data) {
-        await axios.post('http://localhost:5000/cargoHandling/unloaded/', qs.stringify({ unloadRequestId: data.unloadRequestId }))
+        await axios.post('http://localhost:5000/cargoHandling/unloaded/', qs.stringify({...data}))
             .then(res => {
                 if (res.status === 200) {
                     setUloadingData(res.data);
@@ -62,7 +62,7 @@ const CargoHandling = () => {
   
 
     const  handlingloadingRequest = async (data) => {
-        await axios.post('http://localhost:5000/cargoHandling/loaded', qs.stringify({ ...data, shipId: cookies.shipId }))
+        await axios.post('http://localhost:5000/cargoHandling/loaded', qs.stringify({ ...data, shipId: data.shipId}))
             .then(res => {
                 if (res.status === 200) {
                     setLoadingData(res.data);
@@ -80,7 +80,7 @@ const CargoHandling = () => {
     };
 
     const handleStatusUpdate = async (data) => {
-        await axios.post('http://localhost:5000/cargoHandling/updateStatus', qs.stringify({ ...data, shipId: cookies.shipId }))
+        await axios.post('http://localhost:5000/cargoHandling/updateStatus', qs.stringify({ ...data, shipId: data.shipId }))
             .then(res => {
                 if (res.status === 200) {
                     setStatusUpdatedData(res.data);
@@ -107,11 +107,11 @@ const CargoHandling = () => {
             if (activeTab === 'tab1') {
           
             } else if (activeTab === 'tab2') {
-              response = await axios.get(`http://localhost:5000/cargoHandling/unloadRequests/${cookies.fiId}`);
+              response = await axios.get(`http://localhost:5000/cargoHandling/unloadRequests/${cookies.whoRegister}`);
             } else if (activeTab === 'tab3') {
-              response = await axios.get(`http://localhost:5000/cargoHandling/loadRequests/${cookies.fiId}`);
+              response = await axios.get(`http://localhost:5000/cargoHandling/loadRequests/${cookies.whoRegister}`);
             } else if (activeTab === 'tab4') {
-              response = await axios.get(`http://localhost:5000/cargoHandling/getLoadingShipData/${cookies.fiId}`);
+              response = await axios.get(`http://localhost:5000/cargoHandling/getLoadingShipData/${cookies.whoRegister}`);
             }
     
             // Process the response data
