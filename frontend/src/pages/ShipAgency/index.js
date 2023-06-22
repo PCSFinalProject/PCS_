@@ -59,6 +59,7 @@ const ShipAgency = () => {
 
       // This is Request Entry
       const handleRequestEntry = async (event) => {
+        
           console.log('Selected Option:', selectedOption);
             await axios.post('http://localhost:5000/shipAgency/request/entry', qs.stringify({
                 shipId: selectedOptionShip,
@@ -87,9 +88,11 @@ const ShipAgency = () => {
       };
       const handleOptionChangeShipEntry = (event) => {
         setSelectedOptionShip(event.target.value);
+        console.log(event.target.value);
       };
     
       const handleOptionChangeRequestExit = async(event) => {
+        console.log(event.target.value);
         setSelectedOptionShipExit(event.target.value);
      
 
@@ -183,6 +186,7 @@ const ShipAgency = () => {
                             clientData = clientData.data.clientData;
                             approvedFis = approvedFis.data.approvedFis;
                             setUserData(clientData, setClientData);
+                            console.log(clientData,"clientData");
                             setApprovedFiList(approvedFis);
                         } else {
                             console.log('Oopps... something wrong, status code ' + clientData.status);
@@ -511,7 +515,7 @@ const ShipAgency = () => {
         </Select>
       </Field>
       <Field label="Ship" width={1}>
-        <Select value={selectedOption} onChange={handleOptionChangeShipEntry} required>
+        <Select value={selectedOptionShip} onChange={handleOptionChangeShipEntry} required>
             <option value="">Select an option</option>
             {shipListEntry.map((ship) => (
                 <option value={ship.shipId}>{ship.name}</option>
@@ -528,7 +532,7 @@ const ShipAgency = () => {
         <Tab.Pane eventKey="tab4">
  
         <Field label="Ship" width={1}>
-        <Select value={selectedOption} onChange={handleOptionChangeRequestExit} required>
+        <Select value={selectedOptionShipExit} onChange={handleOptionChangeRequestExit} required>
             <option value="">Select an option</option>
             {shipListExit.map((ship) => (
                 <option value={ship.shipId}>{ship.name}</option>

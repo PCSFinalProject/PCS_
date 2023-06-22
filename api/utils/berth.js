@@ -1,10 +1,10 @@
 
-const berthAllocaton=()=>{
-// Define the objective function f(X) that evaluates the quality of a solution X
+
+// Define the objective function berthAllocaton(X) that evaluates the quality of a solution X
 // X is an array of berth assignments for each vessel
-// f(X) returns a positive number that represents the total waiting time of all vessels
-// The lower the f(X), the better the solution
-function f(X) {
+// berthAllocaton(X) returns a positive number that represents the total waiting time of all vessels
+// The lower the berthAllocaton(X), the better the solution
+function berthAllocaton(X) {
     // Initialize the total waiting time to zero
     let total = 0;
     // Loop through each vessel in X
@@ -81,7 +81,7 @@ function f(X) {
     particle.pbest = particle.position.slice();
     
     // Evaluate the fitness of the position using the objective function
-    particle.fitness = f(particle.position);
+    particle.fitness = berthAllocaton(particle.position);
     
     // Add the particle to the swarm array
     swarm.push(particle);
@@ -147,7 +147,7 @@ function f(X) {
       }
       
       // Evaluate the fitness of the new position using the objective function
-      let newFitness = f(particle.position);
+      let newFitness = berthAllocaton(particle.position);
       
       // Update the personal best and fitness if a better solution is found
       if (newFitness < particle.fitness) {
@@ -173,5 +173,5 @@ function f(X) {
   // Print out the best solution found by the algorithm
   console.log("Best solution: " + JSON.stringify(gbest.position));
   console.log("Best fitness: " + gbest.fitness);
-}
-export default berthAllocaton;
+
+module.exports = berthAllocaton;
