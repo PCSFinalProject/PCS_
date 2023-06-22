@@ -56,7 +56,6 @@ const CargoHandling = () => {
                 console.log('Oopps... something wrong');
                 console.log(err);
             });
-            data.preventDefault();
     };
 
   
@@ -75,7 +74,6 @@ const CargoHandling = () => {
                 console.log(err);
             });
 
-        data.preventDefault();
 
     };
 
@@ -106,9 +104,9 @@ const CargoHandling = () => {
             let response;
           if (activeTab === 'tab2') {
               response = await axios.get(`http://localhost:5000/cargoHandling/unloadRequests/${clientData[4].value}`);
-            } else if (activeTab === 'tab4') {
-              response = await axios.get(`http://localhost:5000/cargoHandling/loadRequests/${clientData[4].value}`);
             } else if (activeTab === 'tab3') {
+              response = await axios.get(`http://localhost:5000/cargoHandling/loadRequests/${clientData[4].value}`);
+            } else if (activeTab === 'tab4') {
               response = await axios.get(`http://localhost:5000/cargoHandling/updateCargoStatus/${clientData[4].value}`);
             }
     
@@ -313,7 +311,7 @@ const CargoHandling = () => {
           <Nav.Link eventKey="tab4">Loading Ship</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="tab3">Update  Status</Nav.Link>
+          <Nav.Link eventKey="tab4">Update  Status</Nav.Link>
         </Nav.Item>
       </Nav>
       <Tab.Content>
