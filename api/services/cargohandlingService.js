@@ -32,7 +32,7 @@ const completed = async (shipId) => {
         throw err;
     }
 }
-const getUpadateSatatus = async (portId) => {
+const getUpadateStatus = async (portId) => {
     try{
         const ships = await Ship.find({status: {$in :['UNLOADING','LOADING']}, portId});
         return ships;
@@ -68,6 +68,7 @@ module.exports = {
     completed,
     getUnloadedRequests,
     getLoadedRequests,
-    completed
+    completed,
+    getUpadateStatus
 }
 

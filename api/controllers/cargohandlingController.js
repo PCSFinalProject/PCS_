@@ -47,6 +47,15 @@ const updateStatus = async (req, res) => {
         res.status(500).json(err);
     }
 }
+const getUpadateStatus = async (req, res) => {
+    try{
+    const { portId } = req.params;
+    const ships = await cargoHandlingService.getUpadateStatus(portId);
+    res.status(200).json(ships);
+    }catch(err){
+        res.status(500).json(err);
+    }
+}
 
 
 module.exports = {
@@ -54,5 +63,6 @@ module.exports = {
     loaded,
     getUnloadedRequests,
     getLoadedRequests,
-    updateStatus
+    updateStatus,
+    getUpadateStatus
 }

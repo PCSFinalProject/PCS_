@@ -39,6 +39,6 @@ router.post('/loaded', cargoHandlingController.loaded);
 router.get('/unloadRequests/:portId', cargoHandlingController.getUnloadedRequests);
 router.get('/loadRequests/:portId', cargoHandlingController.getLoadedRequests);
 router.post('/updateStatus', cargoHandlingController.updateStatus);
-router.get('/updateCargoStatus/:portId',cargoHandlingController.updateStatus)
+router.get('/updateCargoStatus/:portId',cargoHandlingController.getUpadateStatus)
 
 module.exports = router;
