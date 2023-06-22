@@ -1,4 +1,4 @@
-const Ship = require('../db/ship');
+const Ship = require('../models/ship');
 
 const unloaded = async (shipId) => {
     try{
@@ -35,7 +35,7 @@ const completed = async (shipId) => {
 
 const getUnloadedRequests = async (portId) => {
     try{
-        const ships = await Ship.find({status: {$in:['REQUEST ULOADING']}, portId});
+        const ships = await Ship.find({status: 'REQUEST UNLOADING', portId});
         return ships;
     }catch(err){
         console.log(err.message);
@@ -45,7 +45,7 @@ const getUnloadedRequests = async (portId) => {
 
 const getLoadedRequests = async (portId) => {
     try{
-        const ships = await Ship.find({status: {$in : ['REQUEST LOADING']}, portId});
+        const ships = await Ship.find({status: 'REQUEST LOADING', portId});
         return ships;
     }catch(err){
         console.log(err.message);

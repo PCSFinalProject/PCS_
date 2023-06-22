@@ -106,10 +106,10 @@ const CargoHandling = () => {
             let response;
           if (activeTab === 'tab2') {
               response = await axios.get(`http://localhost:5000/cargoHandling/unloadRequests/${clientData[4].value}`);
-            } else if (activeTab === 'tab3') {
-              response = await axios.get(`http://localhost:5000/cargoHandling/loadRequests/${clientData[4].value}`);
             } else if (activeTab === 'tab4') {
-              response = await axios.get(`http://localhost:5000/cargoHandling/getLoadingShipData/${clientData[4].value}`);
+              response = await axios.get(`http://localhost:5000/cargoHandling/loadRequests/${clientData[4].value}`);
+            } else if (activeTab === 'tab3') {
+              response = await axios.get(`http://localhost:5000/cargoHandling/updateCargoStatus/${clientData[4].value}`);
             }
     
             // Process the response data
