@@ -163,7 +163,6 @@ const CustomOfficer = () => {
             console.log(error);
           }
         };
-    if(activeTab!=='tab1')
         fetchData();
       }, [activeTab,cookies,fiIdApprove]);
 
