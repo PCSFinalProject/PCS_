@@ -44,7 +44,7 @@ const CargoHandling = () => {
         setFiIdRemove(e.target.value.toUpperCase());
     };
     async function handleUnloadingAcceptRequest  (data) {
-        await axios.post('http://localhost:5000/cargoHandling/unloaded/', qs.stringify({...data,portId:clientData.whoRegistered.ledgerUser}))
+        await axios.post('http://localhost:5000/cargoHandling/unloaded/', qs.stringify({...data,portId:clientData[4].value}))
             .then(res => {
                 if (res.status === 200) {
                     setUloadingData(res.data);
@@ -62,7 +62,7 @@ const CargoHandling = () => {
   
 
     const  handlingloadingRequest = async (data) => {
-        await axios.post('http://localhost:5000/cargoHandling/loaded', qs.stringify({ ...data, portId: clientData.whoRegistered.ledgerUser}))
+        await axios.post('http://localhost:5000/cargoHandling/loaded', qs.stringify({ ...data, portId: clientData[4].value}))
             .then(res => {
                 if (res.status === 200) {
                     setLoadingData(res.data);
@@ -80,7 +80,7 @@ const CargoHandling = () => {
     };
 
     const handleStatusUpdate = async (data) => {
-        await axios.post('http://localhost:5000/cargoHandling/updateStatus', qs.stringify({ ...data, portId: clientData.whoRegistered.ledgerUser }))
+        await axios.post('http://localhost:5000/cargoHandling/updateStatus', qs.stringify({ ...data, portId: clientData[4].value }))
             .then(res => {
                 if (res.status === 200) {
                     setStatusUpdatedData(res.data);
@@ -107,11 +107,11 @@ const CargoHandling = () => {
             if (activeTab === 'tab1') {
           
             } else if (activeTab === 'tab2') {
-              response = await axios.get(`http://localhost:5000/cargoHandling/unloadRequests/${clientData.whoRegistered.ledgerUser}`);
+              response = await axios.get(`http://localhost:5000/cargoHandling/unloadRequests/${clientData[4].value}`);
             } else if (activeTab === 'tab3') {
-              response = await axios.get(`http://localhost:5000/cargoHandling/loadRequests/${clientData.whoRegistered.ledgerUser}`);
+              response = await axios.get(`http://localhost:5000/cargoHandling/loadRequests/${clientData[4].value}`);
             } else if (activeTab === 'tab4') {
-              response = await axios.get(`http://localhost:5000/cargoHandling/getLoadingShipData/${clientData.whoRegistered.ledgerUser}`);
+              response = await axios.get(`http://localhost:5000/cargoHandling/getLoadingShipData/${clientData[4].value}`);
             }
     
             // Process the response data

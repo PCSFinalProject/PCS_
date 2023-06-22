@@ -45,7 +45,7 @@ const TrafficDept = () => {
     async function handleCustomSubmitBerthAllocation  (data) {
         api.post('/trafficDept/berth/allocate', qs.stringify({
             ...data,
-            portId: clientData.whoRegistered.ledgerUser
+            portId: clientData[4].value
         }))
             .then(res => {
                 if (res.status === 200) {
@@ -68,7 +68,7 @@ const TrafficDept = () => {
     async function handleCustomSubmitBerthExit  (data) {
         api.post('/trafficDept/berth/exit', qs.stringify({
             ...data,
-            portId: clientData.whoRegistered.ledgerUser
+            portId: clientData[4].value
         }))
             .then(res => {
                 if (res.status === 200) {

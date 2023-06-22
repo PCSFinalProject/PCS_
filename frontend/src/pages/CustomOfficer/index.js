@@ -31,7 +31,7 @@ const CustomOfficer = () => {
     const handleCustomSubmitImportClearenceAccept = async(rowData) => {
         await axios.post(`http://localhost:5000/customOfficer/approveImport`, {
            ...rowData,
-            portId:clientData.whoRegistered.ledgerUser,
+            portId:clientData[4].value,
          
     })
     .then(res => {
@@ -46,7 +46,7 @@ const CustomOfficer = () => {
     const handleCustomSubmitImportClearenceReject = async(rowData) => {
         await axios.post(`http://localhost:5000/customOfficer/rejectImport`, {
               ...rowData,
-            portId:clientData.whoRegistered.ledgerUser,
+            portId:clientData[4].value,
         })
         .then(res => {
             console.log(res);
@@ -59,7 +59,7 @@ const CustomOfficer = () => {
     const handleCustomSubmitExportClearenceAccept = async(rowData) => {
         await axios.post(`http://localhost:5000/customOfficer/approveExport`, {
               ...rowData,
-                portId:clientData.whoRegistered.ledgerUser,
+                portId:clientData[4].value,
         })
         .then(res => {
             console.log(res);
@@ -73,7 +73,7 @@ const CustomOfficer = () => {
         await axios.post(`http://localhost:5000/customOfficer/rejectExport`, {
                 ...rowData,
               
-                portId:clientData.whoRegistered.ledgerUser,
+                portId:clientData[4].value,
         })
         .then(res => {
             console.log(res);
@@ -136,11 +136,11 @@ const CustomOfficer = () => {
             // Make the appropriate API request based on the activeTab value
             let response=null;
            if (activeTab === 'tab2') {
-               response = await axios.get(`http://localhost:5000/customOfficer/ImportClearance/${clientData.whoRegistered.ledgerUser}/IMPORT`);
+               response = await axios.get(`http://localhost:5000/customOfficer/ImportClearance/${clientData[4].value}/IMPORT`);
               setImportClearenceData(mockData)
             //   response1 = await api.get('http://localhost:5000/fi/getAllPorts');
             } else if (activeTab === 'tab3') {
-              response = await axios.get(`http://localhost:5000/customOfficer/ExportClearance/${clientData.whoRegistered.ledgerUser}/EXPORT`);
+              response = await axios.get(`http://localhost:5000/customOfficer/ExportClearance/${clientData[4].value}/EXPORT`);
             }
     
             // Process the response data
