@@ -83,7 +83,7 @@ const getExportClearancePort = async (portId,type) => {
 
 const approveImportClearance = async (shipId) => {
     try{
-        const ship = await customOfficer.approveImportClearance(shipId);
+        const ship = await customOfficer.acceptImportClearance(shipId);
         return ship;
     }catch(err){
         console.log(err.message);
@@ -93,7 +93,7 @@ const approveImportClearance = async (shipId) => {
 
 const approveExportClearance = async (shipId) => {
     try{
-        const ship = await customOfficer.approveExportClearance(shipId);
+        const ship = await customOfficer.acceptImportClearance(shipId);
         return ship;
     }catch(err){
         console.log(err.message);
