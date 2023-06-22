@@ -104,9 +104,7 @@ const CargoHandling = () => {
           try {
             // Make the appropriate API request based on the activeTab value
             let response;
-            if (activeTab === 'tab1') {
-          
-            } else if (activeTab === 'tab2') {
+          if (activeTab === 'tab2') {
               response = await axios.get(`http://localhost:5000/cargoHandling/unloadRequests/${clientData[4].value}`);
             } else if (activeTab === 'tab3') {
               response = await axios.get(`http://localhost:5000/cargoHandling/loadRequests/${clientData[4].value}`);

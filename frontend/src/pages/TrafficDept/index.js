@@ -123,10 +123,10 @@ const TrafficDept = () => {
             let response;
             console.log(clientData[4],"client");
           if (activeTab === 'tab2') {
-                response = await api.get(`http://localhost:5000/trafficDept/berth/requests/${clientData[4].value}`);
+                response = await axios.get(`http://localhost:5000/trafficDept/berth/requests/${clientData[4].value}`);
 
             } else if (activeTab === 'tab3') {
-                response = await api.get(`http://localhost:5000/trafficDept/berth/allocated/${clientData[4].value}`);
+                response = await axios.get(`http://localhost:5000/trafficDept/berth/allocated/${clientData[4].value}`);
             } 
     
             // Process the response data
@@ -149,6 +149,7 @@ const TrafficDept = () => {
             console.log(error);
           }
         };
+        if(activeTab === 'tab2' || activeTab === 'tab3')
         fetchData();
       }, [activeTab]);
 
