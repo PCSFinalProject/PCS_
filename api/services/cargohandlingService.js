@@ -2,12 +2,8 @@ const Ship = require('../db/ship');
 
 const unloaded = async (shipId) => {
     try{
-        const ship = await Ship.findOne({shipId});
-        if(!ship){
-            throw new Error('Ship not found');
-        }
-        ship.status= 'UNLOADING';
-        await ship.save();
+        const ship = await Ship.findOneAndUpdate({shipId},{$set:{status:'UNLOADING'}},{new:true});
+       
         return ship;
     }catch(err){
         console.log(err.message);
@@ -17,12 +13,8 @@ const unloaded = async (shipId) => {
 
 const loaded = async (shipId) => {
     try{
-        const ship = await Ship.findOne({shipId});
-        if(!ship){
-            throw new Error('Ship not found');
-        }
-        ship.status= 'LOADING';
-        await ship.save();
+        const ship = await Ship.findOneAndUpdate({shipId},{$set:{status:'LOADING'}},{new:true});
+       
         return ship;
     }catch(err){
         console.log(err.message);
@@ -32,12 +24,8 @@ const loaded = async (shipId) => {
 
 const completed = async (shipId) => {
     try{
-        const ship = await Ship.findOne({shipId, status: 'REQUESTING EXIT'});
-        if(!ship){
-            throw new Error('Ship not found');
-        }
-        ship.status= 'COMPLETED';
-        await ship.save();
+        const ship = await Ship.findOneAndUpdate({shipId},{$set:{status:'COMPLETED'}},{new:true});
+       
         return ship;
     }catch(err){
         console.log(err.message);

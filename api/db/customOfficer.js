@@ -64,9 +64,8 @@ const approveExitShip = async (shipId) => {
 const rejectEntryShip = async (shipId) => {
     try{
     // update the ship status to ENTRY REJECTED and portId to the portId passed in the request
-    const ship = await Ship.findOneAndUpdate({shipId, status: 'PENDING'});
-    ship.status = 'ENTRY REJECTED';
-    await ship.save();
+    const ship = await Ship.findOneAndUpdate({shipId, status: 'PENDING'},{$set:{status:'ENTRY REJECTED'}},{new:true});
+  
     return ship;
     }catch(err){
         console.log(err.message);
@@ -77,9 +76,8 @@ const rejectEntryShip = async (shipId) => {
 const rejectExitShip = async (shipId) => {
     try{
     // update the ship status to EXIT REJECTED and portId to the portId passed in the request
-    const ship = await Ship.findOne({shipId, status:{$in: ['UNLOADED', 'REQUEST EXIT','COMPLETED','REQUESTING EMPTY BERTH']}});
-    ship.status = 'EXIT REJECTED';
-    await ship.save();
+    const ship = await Ship.findOneAndUpdate({shipId, status:{$in: ['UNLOADED', 'REQUEST EXIT','COMPLETED','REQUESTING EMPTY BERTH']}},{status:'EXIT REJECTED'}, {new:true});
+   
     return ship;
     }catch(err){
         console.log(err.message);
@@ -113,9 +111,8 @@ const getExportClearancePort = async (portId,type) => {
 const acceptImportClearance = async (shipId) => {
     try{
     // update the ship status to UNLOADING and portId to the portId passed in the request
-    const ship  = Ship.findOne({shipId, status:'DOCKED'});
-    ship.status = 'REQUEST UNLOADING';
-    await ship.save();
+    const ship  = Ship.findOneAndUpdate({shipId, status:'DOCKED'},{$set:{status:'REQUEST UNLOADING'}},{new:true});
+   
     return ship;
     }catch(err){
         console.log(err.message);
@@ -126,9 +123,8 @@ const acceptImportClearance = async (shipId) => {
 const acceptExportClearance = async (shipId) => {
     try{
     // update the ship status to EXITING and portId to the portId passed in the request
-    const ship  = Ship.findOne({shipId, status:'DOCKED'});
-    ship.status = 'REQUEST LOADING';
-    await ship.save();
+    const ship  = Ship.findOneAndUpdate({shipId, status:'DOCKED'},{$set:{status:'REQUEST LOADING'}},{new:true});
+  
     return ship;
     }catch(err){
         console.log(err.message);
@@ -139,9 +135,8 @@ const acceptExportClearance = async (shipId) => {
 const rejectImportClearance = async (shipId) => {
     try{
     // update the ship status to ENTRY REJECTED and portId to the portId passed in the request
-    const ship  = Ship.findOne({shipId, status:'DOCKED'});
-    ship.status = 'REJECTED';
-    await ship.save();
+    const ship  = Ship.findOneAndUpdate({shipId, status:'DOCKED'},{$set:{status:'REJECTED'}},{new:true});
+ 
     return ship;
     }catch(err){
         console.log(err.message);
@@ -152,9 +147,8 @@ const rejectImportClearance = async (shipId) => {
 const rejectExportClearance = async (shipId) => {
     try{
     // update the ship status to EXIT REJECTED and portId to the portId passed in the request
-    const ship  = Ship.findOne({shipId, status:'DOCKED'});
-    ship.status = 'REJECTED';
-    await ship.save();
+    const ship  = Ship.findOneAndUpdate({shipId, status:'DOCKED'},{$set:{status:'REJECTED'}},{new:true});
+   
     return ship;
     }catch(err){
         console.log(err.message);

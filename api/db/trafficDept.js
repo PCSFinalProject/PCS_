@@ -4,13 +4,8 @@ const Ship = require('../models/ship');
 
 const allocateBerth = async (shipId, berthId) => {
     try{
-        const ship = Ship.findOne({shipId});
-        if(!ship){
-            throw new Error('Ship not found');
-        }
-        ship.berthId = berthId;
-        ship.status = 'DOCKED';
-        await ship.save();
+        const ship = Ship.findOneAndUpdate({shipId},{$set:{status:'DOCKED',berthId}},{new:true});
+        
         return ship;
     }catch(err){
         console.log(err.message);
@@ -20,13 +15,9 @@ const allocateBerth = async (shipId, berthId) => {
 
 const requestEmptyBerth = async (shipId, berthId) => {
     try{
-        const ship = Ship.findOne({shipId});
-        if(!ship){
-            throw new Error('Ship not found');
-        }
-        ship.berthId = berthId;
-        ship.status = 'REQUESTING EMPTY BERTH';
-        await ship.save();
+        const ship = Ship.findOneAndUpdate({shipId},{$set:{status:'REQUESTING EMPTY BERTH'}},{new:true});
+      
+       
         return ship;
     }
     catch(err){
