@@ -32,6 +32,15 @@ const completed = async (shipId) => {
         throw err;
     }
 }
+const getUpadateSatatus = async (portId) => {
+    try{
+        const ships = await Ship.find({status: {$in :['UNLOADING','LOADING']}, portId});
+        return ships;
+    }catch(err){
+        console.log(err.message);
+        throw err;
+    }
+}
 
 const getUnloadedRequests = async (portId) => {
     try{
