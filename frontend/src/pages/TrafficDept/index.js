@@ -42,11 +42,50 @@ const TrafficDept = () => {
     function handleChooseFiRemove(e) {
         setFiIdRemove(e.target.value.toUpperCase());
     };
-    function handleCustomSubmitBerthAllocation  (e) {
-        e.preventDefault();
+    async function handleCustomSubmitBerthAllocation  (data) {
+        api.post('/trafficDept/berth/allocate', qs.stringify({
+            ...data,
+            portId: clientData.whoRegistered.ledgerUser
+        }))
+            .then(res => {
+                if (res.status === 200) {
+                    console.log(res.data);
+                    setBerthAllocationData(res.data);
+                    setActiveTab('tab2');
+                } else {
+                    console.log('Oopps... something wrong, status code ' + res.status);
+                }
+            })
+            .catch((err) => {
+                console.log('Oopps... something wrong');
+                console.log(err);
+            });
+
         console.log("Submitted");
         console.log(data);
     };
+
+    async function handleCustomSubmitBerthExit  (data) {
+        api.post('/trafficDept/berth/exit', qs.stringify({
+            ...data,
+            portId: clientData.whoRegistered.ledgerUser
+        }))
+            .then(res => {
+                if (res.status === 200) {
+                    console.log(res.data);
+                    setBerthAllocationData(res.data);
+                    setActiveTab('tab3');
+                } else {
+                    console.log('Oopps... something wrong, status code ' + res.status);
+                }
+            })
+            .catch((err) => {
+                console.log('Oopps... something wrong');
+                console.log(err);
+            });
+            setActiveTab('tab3');
+        };
+
     useEffect(() => {
         try {
             axios.all([
@@ -82,14 +121,11 @@ const TrafficDept = () => {
           try {
             // Make the appropriate API request based on the activeTab value
             let response;
-            if (activeTab === 'tab1') {
-          
-            } else if (activeTab === 'tab2') {
-                response = await api.get('http://localhost:5000/trafficDept/berth/requests/:portId');
-                setBerthReuestData(mockData);
+          if (activeTab === 'tab2') {
+                response = await api.get(`http://localhost:5000/trafficDept/berth/requests/${clientData.whoRegister.ledgerUser}`);
 
             } else if (activeTab === 'tab3') {
-                response = await api.get('http://localhost:5000/trafficDept/berth/allocated/:portId');
+                response = await api.get(`http://localhost:5000/trafficDept/berth/allocated/${clientData.whoRegister.ledgerUser}`);
             } 
     
             // Process the response data
@@ -112,7 +148,7 @@ const TrafficDept = () => {
             console.log(error);
           }
         };
-    
+    if(activeTab === 'tab2' || activeTab === 'tab3' )
         fetchData();
       }, [activeTab]);
 
@@ -279,7 +315,7 @@ const TrafficDept = () => {
                 </Card>
                 <Card mt={20}>
                     <Heading as={'h2'}>Join Port Authority(get approved)</Heading>
-                    <Form onSubmit={handleSubmitApprove}>
+                  
                         <Flex mx={-3}>
                             <Box width={1} px={3}>
                                 <Field label="Port Authority ID" width={1}>
@@ -296,7 +332,7 @@ const TrafficDept = () => {
                         <Flex mx={-3} alignItems={'center'}>
                             <Box px={3}>
                                 <Button type="submit" disabled={isLoadingApprove}>
-                                    {isLoadingApprove ? <Loader color="white" /> : <p>Get Approved</p>}
+                                    {isLoadingApprove ? <Loader color="white" onClick={handleSubmitApprove} /> : <p>Get Approved</p>}
                                 </Button>
                             </Box>
                             {approvedMsg &&
@@ -305,11 +341,10 @@ const TrafficDept = () => {
                                 </Box>
                             }
                         </Flex>
-                    </Form>
                 </Card>
                 <Card mt={20}>
                     <Heading as={'h2'}>Remove Port Authority approval</Heading>
-                    <Form onSubmit={handleSubmitRemove}>
+                   
                         <Flex mx={-3}>
                             <Box width={1} px={3}>
                                 <Field label="Port Authority ID" width={1}>
@@ -326,7 +361,7 @@ const TrafficDept = () => {
                         <Flex mx={-3} alignItems={'center'}>
                             <Box px={3}>
                                 <Button type="submit" disabled={isLoadingRemove}>
-                                    {isLoadingRemove ? <Loader color="white" /> : <p>Remove</p>}
+                                    {isLoadingRemove ? <Loader color="white" onClick={handleSubmitRemove} /> : <p>Remove</p>}
                                 </Button>
                             </Box>
                             {removedMsg &&
@@ -335,7 +370,6 @@ const TrafficDept = () => {
                                 </Box>
                             }
                         </Flex>
-                    </Form>
                 </Card>
                 </Tab.Pane>
         <Tab.Pane eventKey="tab2">
@@ -392,7 +426,7 @@ const TrafficDept = () => {
             <td>{rowData.destination}</td>
             <td>{rowData.status}</td>
             <td>
-            <Button  variant="warning"onClick={() => handleCustomSubmitBerthAllocation(rowData)} >Request</Button>
+            <Button  variant="warning"onClick={() => handleCustomSubmitBerthExit(rowData)} >Request</Button>
             </td>
             
           </tr>

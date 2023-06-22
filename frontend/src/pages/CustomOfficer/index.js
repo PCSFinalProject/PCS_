@@ -30,9 +30,9 @@ const CustomOfficer = () => {
 
     const handleCustomSubmitImportClearenceAccept = async(rowData) => {
         await axios.post(`http://localhost:5000/customOfficer/approveImport`, {
-           ...rowData
-           ,shipId:rowData.id,
-           id: cookies.id
+           ...rowData,
+            portId:clientData.whoRegistered.ledgerUser,
+         
     })
     .then(res => {
         console.log(res);
@@ -45,9 +45,8 @@ const CustomOfficer = () => {
     };
     const handleCustomSubmitImportClearenceReject = async(rowData) => {
         await axios.post(`http://localhost:5000/customOfficer/rejectImport`, {
-              ...rowData
-                ,shipId:rowData.id,
-                id: cookies.id
+              ...rowData,
+            portId:clientData.whoRegistered.ledgerUser,
         })
         .then(res => {
             console.log(res);
@@ -60,8 +59,7 @@ const CustomOfficer = () => {
     const handleCustomSubmitExportClearenceAccept = async(rowData) => {
         await axios.post(`http://localhost:5000/customOfficer/approveExport`, {
               ...rowData,
-                shipId:rowData.id,
-                id: cookies.id
+                portId:clientData.whoRegistered.ledgerUser,
         })
         .then(res => {
             console.log(res);
@@ -74,8 +72,8 @@ const CustomOfficer = () => {
     const handleCustomSubmitExportClearenceReject = async(rowData) => {
         await axios.post(`http://localhost:5000/customOfficer/rejectExport`, {
                 ...rowData,
-                shipId:rowData.id,
-                id: cookies.id
+              
+                portId:clientData.whoRegistered.ledgerUser,
         })
         .then(res => {
             console.log(res);
@@ -137,14 +135,12 @@ const CustomOfficer = () => {
           try {
             // Make the appropriate API request based on the activeTab value
             let response=null;
-            if (activeTab === 'tab1') {
-          
-            }  else if (activeTab === 'tab2') {
-               response = await axios.get(`http://localhost:5000/customOfficer/ImportClearance/${cookies.user.id}/IMPORT`);
+           if (activeTab === 'tab2') {
+               response = await axios.get(`http://localhost:5000/customOfficer/ImportClearance/${clientData.whoRegistered.ledgerUser}/IMPORT`);
               setImportClearenceData(mockData)
             //   response1 = await api.get('http://localhost:5000/fi/getAllPorts');
             } else if (activeTab === 'tab3') {
-              response = await axios.get(`http://localhost:5000/customOfficer/ExportClearance/${cookies.user.id}/EXPORT`);
+              response = await axios.get(`http://localhost:5000/customOfficer/ExportClearance/${clientData.whoRegistered.ledgerUser}/EXPORT`);
             }
     
             // Process the response data
@@ -167,7 +163,7 @@ const CustomOfficer = () => {
             console.log(error);
           }
         };
-    
+    if(activeTab!=='tab1')
         fetchData();
       }, [activeTab,cookies,fiIdApprove]);
 

@@ -167,7 +167,8 @@ function berthAllocaton(X) {
       console.log("Position: " + JSON.stringify(particle.position));
       
     }
-    
+    console.log("Best solution: " + JSON.stringify(gbest.position));
+    console.log("Best fitness: " + gbest.fitness);
   }
   
   // Print out the best solution found by the algorithm

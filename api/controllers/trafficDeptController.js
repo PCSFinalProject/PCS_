@@ -1,5 +1,5 @@
 const trafficDeptService  = require('../services/trafficDeptService');
-const { default: berthAllocaton } = require('../utils/berth');
+const {  berthAllocaton } = require('../utils/berth');
 
 const allocateBerth = async (req, res) => {
     try{

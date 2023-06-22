@@ -37,7 +37,7 @@ const requestEmptyBerth = async (shipId, berthId) => {
 
 const getBerthRequests = async (portId) => {
     try{
-        const ships = Ship.find({status:'REQUEST ENTRY',portId});
+        const ships = Ship.find({status:{$in: ["ENTRY ACCEPTED","PENDING"]},portId});
         return ships;
     }catch(err){
         console.log(err.message);

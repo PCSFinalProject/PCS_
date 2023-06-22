@@ -25,8 +25,8 @@ const getExitRequests = async (req, res) => {
 
 const approveEntry = async (req, res) => {
     try{
-    const { shipId } = req.body;
-    const ship = await customDutyService.approveEntry(shipId);
+    const { shipId ,portId} = req.body;
+    const ship = await customDutyService.approveEntry(shipId,portId);
     res.status(200).json(ship);
     }catch(err){
         res.status(500).json(err);
@@ -35,8 +35,8 @@ const approveEntry = async (req, res) => {
 
 const approveExit = async (req, res) => {
     try{
-    const { shipId } = req.body;
-    const ship = await customDutyService.approveExit(shipId);
+    const { shipId ,portId} = req.body;
+    const ship = await customDutyService.approveExit(shipId,portId);
     res.status(200).json(ship);
     }catch(err){
         res.status(500).json(err);

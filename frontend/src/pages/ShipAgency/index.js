@@ -80,6 +80,7 @@ const ShipAgency = () => {
 
 
         event.preventDefault();
+        setActiveTab('tab3');
         };
 
 
@@ -119,6 +120,7 @@ const ShipAgency = () => {
             setApprovedMsg('Error');
         });
         event.preventDefault();
+        setActiveTab('tab4');
             };
 
         
@@ -222,7 +224,7 @@ const ShipAgency = () => {
             }
     
             // Process the response data
-            if (response && response.status === 200) {
+            else if (response && response.status === 200) {
               const responseData = response.data;
               // Update the necessary state variables with the response data
               // ...
@@ -243,7 +245,7 @@ const ShipAgency = () => {
             console.log(error);
           }
         };
-    
+    if(activeTab === 'tab3' || activeTab === 'tab4')
         fetchData();
       }, [activeTab]);
 
@@ -499,6 +501,7 @@ const ShipAgency = () => {
       </Field>
     
       </Flex>
+ 
       <Flex justifyContent="flex-end" mt={3}>
         <Button type="submit" onClick={handleSubmit}>Submit</Button>
       </Flex>
