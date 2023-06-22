@@ -308,7 +308,7 @@ const CargoHandling = () => {
           <Nav.Link eventKey="tab2">Unloading Ship</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="tab4">Loading Ship</Nav.Link>
+          <Nav.Link eventKey="tab3">Loading Ship</Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="tab4">Update  Status</Nav.Link>
