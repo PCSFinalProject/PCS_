@@ -11,7 +11,7 @@ exports.createClient = (req, res) => {
     const ledgerUser = req.ledgerUser;
 
     const { login, password, userType, name, dateOfJoining, address, idNumber } = req.body;
-    const clientData = JSON.stringify({ name, dateOfJoining, address, idNumber, whoRegistered: { orgNum, ledgerUser } });
+    const clientData = JSON.stringify({ name, dateOfJoining, address, idNumber, whoRegistered: { orgNum, ledgerUser },userType });
 
     networkConnection
         .submitTransaction('createClient', orgNum, ledgerUser, [clientData])

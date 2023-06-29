@@ -40,7 +40,7 @@ router.post('/requestEmpty',trafficDeptController.requestEmptyBerth)
 
 router.get('/berth/allocated/:portId',trafficDeptController.getBerthAlllocated)
 
-router.post('/berth/requests/:portId',trafficDeptController.getBerthRequests);
+router.get('/berth/requests/:portId',trafficDeptController.getBerthRequests);
 
 
 module.exports = router;

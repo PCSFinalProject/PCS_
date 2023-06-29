@@ -13,7 +13,7 @@ const allocateBerth = async (shipId, berthId) => {
     }
     }
 
-const requestEmptyBerth = async (shipId, berthId) => {
+const requestEmptyBerth = async (shipId) => {
     try{
         const ship = Ship.findOneAndUpdate({shipId},{$set:{status:'REQUESTING EMPTY BERTH'}},{new:true});
       

@@ -2,9 +2,9 @@
 const trafficDept = require('../db/trafficDept');
 const berthAllocaton = require('../utils/berth');
 
-const allocateBerth = async (shipId) => {
+const allocateBerth = async (shipId,berthId) => {
     try{
-        const ship = await trafficDept.allocateBerth(shipId);
+        const ship = await trafficDept.allocateBerth(shipId,berthId);
         return ship;
     }catch(err){
         console.log(err.message);
@@ -22,9 +22,9 @@ const requestEmptyBerth = async (shipId) => {
     }
 }
 
-const getBerthRequests = async (portID) => {
+const getBerthRequests = async (portId) => {
     try{
-        const ships = await trafficDept.getBerthRequests(portID);
+        const ships = await trafficDept.getBerthRequests(portId);
         return ships;
     }catch(err){
         console.log(err.message);

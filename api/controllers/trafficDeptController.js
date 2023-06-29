@@ -5,7 +5,7 @@ const allocateBerth = async (req, res) => {
     try{
         const { shipId } = req.body;
         const berthID = berthAllocaton(req.body,portId);
-        const ship = await trafficDeptService.allocateBerth(shipId, berthId);
+        const ship = await trafficDeptService.allocateBerth(shipId, berthID);
         res.status(200).json(ship);
     }catch(err){
         res.status(500).json(err);
