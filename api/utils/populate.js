@@ -58,7 +58,37 @@ function saveUser(user, cb) {
             user.Key,
             user.Record.whoRegistered,
             cb);
-    } else if (user.Key.match(/^FI\d+$/)) {
+        }
+    // else if (user.Key.match(/^(?i)customOfficer\d+$/)) {
+    //     saveClient(
+    //         user.Record.name.replace(/ /g, ''),
+    //         '123456',
+    //         user.Key,
+    //         user.Record.orgCredentials,
+    //         cb);
+    // }else if (user.Key.match(/^(?i)shipAgency\d+$/)) {
+    //     saveClient(
+    //         user.Record.name.replace(/ /g, ''),
+    //         '123456',
+    //         user.Key,
+    //         user.Record.orgCredentials,
+    //         cb);
+    // }else if (user.Key.match(/^(?i)trafficDept\d+$/)) {
+    //     saveClient(
+    //         user.Record.name.replace(/ /g, ''),
+    //         '123456',
+    //         user.Key,
+    //         user.Record.orgCredentials,
+    //         cb);
+    // }else if (user.Key.match(/^(?i)cargoHandling\d+$/)) {
+    //     saveClient(
+    //         user.Record.name.replace(/ /g, ''),
+    //         '123456',
+    //         user.Key,
+    //         user.Record.orgCredentials,
+    //         cb);
+    // } 
+    else if (user.Key.match(/^FI\d+$/)) {
         saveFi(
             user.Record.name.replace(/ /g, ''),
             '123456',

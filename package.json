@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@hyperledger/caliper-cli": "^0.3.0",
+    "joi": "^17.9.2"
+  }
+}

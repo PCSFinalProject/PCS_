@@ -1,9 +1,10 @@
 const User = require('../models/user');
 
-exports.clientCreate = async function (login, password, ledgerId, whoRegistered) {
+exports.clientCreate = async function (login, password, userType, ledgerId, whoRegistered) {
     const newClient = new User({
         login,
         password,
+        userType,
         ledgerId,
         whoRegistered
     });

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { Flex, Box, Card, Heading, Text, Form, Field, Button, Loader } from 'rimble-ui';
+import { Flex, Box, Card, Heading, Text, Form,Field,Button, Loader, Select, FileUpload, Input } from 'rimble-ui'
+   
 
 import qs from 'qs';
 import axios from 'axios';
@@ -9,7 +10,7 @@ import axios from 'axios';
 import api from '../../service/api';
 import UserData from '../../components/UserData';
 import { setUserData } from '../../functions/setUserData';
-
+import { Tab, Nav } from 'react-bootstrap';
 const Client = () => {
 
     const navigate = useNavigate();
@@ -23,7 +24,53 @@ const Client = () => {
     const [fiIdRemove, setFiIdRemove] = useState('');
     const [removedMsg, setRemovedMsg] = useState('');
     const [isLoadingRemove, setIsLoadingRemove] = useState(false);
-
+    const [activeTab, setActiveTab] = useState('tab1');
+  
+      const [selectedOption, setSelectedOption] = useState('');
+      const [files, setFiles] = useState([]);
+      const [input1, setInput1] = useState('');
+      const [input2, setInput2] = useState('');
+      const [input3, setInput3] = useState('');
+    
+      const handleOptionChange = (event) => {
+        setSelectedOption(event.target.value);
+      };
+    
+      const handleFileUpload = (event) => {
+        const uploadedFiles = Array.from(event.target.files);
+        setFiles(uploadedFiles);
+      };
+    
+      const handleInputChange1 = (event) => {
+        setInput1(event.target.value);
+      };
+    
+      const handleInputChange2 = (event) => {
+        setInput2(event.target.value);
+      };
+    
+      const handleInputChange3 = (event) => {
+        setInput3(event.target.value);
+      };
+    
+      const handleSubmit = (event) => {
+        event.preventDefault();
+    
+        // Perform form submission logic here
+        console.log('Selected Option:', selectedOption);
+        console.log('Input 1:', input1);
+        console.log('Input 2:', input2);
+        console.log('Input 3:', input3);
+    
+        // Reset form fields
+        setSelectedOption('');
+        setInput1('');
+        setInput2('');
+        setInput3('');
+      };
+    const handleTabSelect = (selectedTab) => {
+      setActiveTab(selectedTab);
+    };
     function handleChooseFiApprove(e) {
         setFiIdApprove(e.target.value.toUpperCase());
     };
@@ -193,6 +240,21 @@ const Client = () => {
                     <Heading as={'h2'}>Client data</Heading>
                     <UserData userData={clientData} />
                 </Card>
+
+                <Tab.Container activeKey={activeTab} onSelect={handleTabSelect}>
+      <Nav variant="tabs">
+        <Nav.Item>
+          <Nav.Link eventKey="tab1">Manage Port</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="tab2">IMPORT</Nav.Link>
+        </Nav.Item>
+        <Nav.Item>
+          <Nav.Link eventKey="tab3">EXPORT</Nav.Link>
+        </Nav.Item>
+      </Nav>
+      <Tab.Content>
+        <Tab.Pane eventKey="tab1">
                 <Card mt={20}>
                     <Flex my={1}>
                         <Box ml={10} my={1}>
@@ -267,6 +329,39 @@ const Client = () => {
                         </Flex>
                     </Form>
                 </Card>
+                </Tab.Pane>
+        <Tab.Pane eventKey="tab2">
+        <Form onSubmit={handleSubmit}>
+      <Field label="Dropdown" width={1}>
+        <Select value={selectedOption} onChange={handleOptionChange}>
+          <option value="">Select an option</option>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+        </Select>
+      </Field>
+      <Field label="Files" width={1}>
+        <Input type="file" accept="application/zip" onChange={handleFileUpload} multiple />
+      </Field>
+      <Field label="Input 1" width={1}>
+        <Input value={input1} onChange={handleInputChange1} />
+      </Field>
+      <Field label="Input 2" width={1}>
+        <Input value={input2} onChange={handleInputChange2} />
+      </Field>
+      <Field label="Input 3" width={1}>
+        <Input value={input3} onChange={handleInputChange3} />
+      </Field>
+      <Flex justifyContent="flex-end" mt={3}>
+        <Button type="submit">Submit</Button>
+      </Flex>
+    </Form>
+        </Tab.Pane>
+        <Tab.Pane eventKey="tab3">
+          <p>Content for Tab 3</p>
+        </Tab.Pane>
+      </Tab.Content>
+    </Tab.Container>
             </Box>
         </Flex>
     );

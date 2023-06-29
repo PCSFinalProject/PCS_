@@ -1,0 +1,53 @@
+[
+    {
+      "id": "4321",
+      "name": "Port of Long Beach Marine Department",
+      "address": "4801 Airport Plaza Dr, Long Beach, CA 90815",
+      "phoneNumber": "1-562-570-2619",
+      "emailAddress": "maritime@polb.com",
+      "website": "https://www.polb.com/",
+      "hoursOfOperation": "Monday-Friday, 7am-6pm",
+      "contactPerson": "Jane Doe, Director of Marine Operations"
+    },
+    {
+      "id": "5678",
+      "name": "Port of San Francisco Marine Department",
+      "address": "Pier 1, San Francisco, CA 94111",
+      "phoneNumber": "1-415-274-0400",
+      "emailAddress": "info@sfport.com",
+      "website": "https://sfport.com/",
+      "hoursOfOperation": "Monday-Friday, 9am-5pm",
+      "contactPerson": "Michael Johnson, Director of Marine Operations"
+    },
+    {
+      "id": "9012",
+      "name": "Port of Seattle Marine Department",
+      "address": "2711 Alaskan Way, Seattle, WA 98121",
+      "phoneNumber": "1-206-787-3382",
+      "emailAddress": "marinedivision@portseattle.org",
+      "website": "https://www.portseattle.org/",
+      "hoursOfOperation": "Monday-Friday, 8am-5pm",
+      "contactPerson": "David Lee, Director of Marine Operations"
+    },
+    {
+      "id": "3456",
+      "name": "Port of Vancouver Marine Department",
+      "address": "999 Canada Pl, Vancouver, BC V6C 3T4, Canada",
+      "phoneNumber": "+1 604-665-9000",
+      "emailAddress": "info@portvancouver.com",
+      "website": "https://www.portvancouver.com/",
+      "hoursOfOperation": "Monday-Friday, 9am-5pm",
+      "contactPerson": "Karen Chen, Director of Marine Operations"
+    },
+    {
+      "id": "7890",
+      "name": "Port of Houston Marine Department",
+      "address": "111 East Loop North, Houston, TX 77029",
+      "phoneNumber": "1-713-670-2400",
+      "emailAddress": "customerservice@porthouston.com",
+      "website": "https://www.porthouston.com/",
+      "hoursOfOperation": "Monday-Friday, 8am-5pm",
+      "contactPerson": "William Lee, Director of Marine Operations"
+    }
+  ]
+  

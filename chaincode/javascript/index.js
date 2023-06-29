@@ -7,6 +7,10 @@
 'use strict';
 
 const PCS = require('./lib/PCS');
+const  CargoHandling = require('./lib/cargoHandling');
+const Ship = require('./lib/ShipAgency');
+const TrafficDept = require('./lib/trafficDept');
+const customDuty    =   require('./lib/customDuty');
 
 module.exports.PCS = PCS;
-module.exports.contracts = [ PCS ];
+module.exports.contracts = [ PCS, CargoHandling, Ship, TrafficDept, customDuty ];

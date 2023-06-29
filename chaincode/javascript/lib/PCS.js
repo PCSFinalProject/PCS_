@@ -3,6 +3,7 @@ const ClientIdentity = require('fabric-shim').ClientIdentity;
 
 const initialClientData = require('../data/initialClientData.json');
 const initialFIData = require('../data/initialFIData.json');
+const initialBerthData= require('../data/initialBerthData.json');
 
 class PCS extends Contract {
 
@@ -10,6 +11,7 @@ class PCS extends Contract {
         super();
         this.nextClientId = 1;
         this.nextFiId = 1;
+        this.nextBerthId = 1;
     }
 
     /**
@@ -40,13 +42,35 @@ class PCS extends Contract {
 
         for (const fi of fis) {
             fi.docType = 'fi';
+
             await ctx.stub.putState('FI' + this.nextFiId, Buffer.from(JSON.stringify(fi)));
+            this.createBerth(ctx,this.nextFiId);
             console.info('Added <--> ', fi);
             this.nextFiId++;
         }
 
         console.info('============= END : Initialize Ledger ===========');
     }
+async createBerth(ctx,FiId){
+
+  initialBerthData.forEach(async (berth)=>{
+    berth.docType = 'berth';
+    berth.fiId = FiId;
+    berth.id = 'BERTH' + this.nextBerthId;
+    berth.occupied = false;
+    berth.empty = true;
+    await ctx.stub.putState('BERTH' + this.nextBerthId, Buffer.from(JSON.stringify(berth)));
+    const berthFiIndexKey = await ctx.stub.createCompositeKey('berthId~fiId', ['BERTH' + this.nextBerthId, FiId]);
+    await ctx.stub.putState(berthFiIndexKey, Buffer.from('\u0000'));
+    const fiBerthIndexKey = await ctx.stub.createCompositeKey('fiId~berthId', [FiId, 'BERTH' + this.nextBerthId]);
+    await ctx.stub.putState(fiBerthIndexKey, Buffer.from('\u0000'));
+    console.info('Added <--> ', berth);
+    this.nextBerthId++;
+  }
+    )
+
+}
+
 
     /**
      *
@@ -186,7 +210,7 @@ class PCS extends Contract {
      * @returns {boolean} return true if approved
      */
     async approve(ctx, clientId, fiId) {
-        console.info('======== START : Approve Port Authority for client data access ==========');
+        console.info('======== START : Approve financial institution for client data access ==========');
 
         const res = await this.isWhoRegistered(ctx, clientId);
 
@@ -207,7 +231,7 @@ class PCS extends Contract {
 
         await ctx.stub.putState(clientFiIndexKey, Buffer.from('\u0000'));
         await ctx.stub.putState(fiClientIndexKey, Buffer.from('\u0000'));
-        console.info('======== END : Approve Port Authority for client data access =========');
+        console.info('======== END : Approve financial institution for client data access =========');
 
         return true;
     }
@@ -221,7 +245,7 @@ class PCS extends Contract {
      * @returns {boolean} return true if removed
      */
     async remove(ctx, clientId, fiId) {
-        console.info('======== START : Remove Port Authority for client data access ==========');
+        console.info('======== START : Remove financial institution for client data access ==========');
 
         if (!this.isWhoRegistered(ctx, clientId)) {
             return false;
@@ -239,7 +263,7 @@ class PCS extends Contract {
             await ctx.stub.deleteState(fiClientResult.value.key);
         }
 
-        console.info('======== END : Remove Port Authority for client data access =========');
+        console.info('======== END : Remove financial institution for client data access =========');
 
         return true;
     }

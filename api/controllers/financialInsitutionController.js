@@ -6,12 +6,12 @@ const io = require('../db/io');
 const networkConnection = require('../utils/networkConnection');
 
 exports.createClient = (req, res) => {
-
+    console.log(req.body,"req received")
     const orgNum = req.orgNum;
     const ledgerUser = req.ledgerUser;
 
-    const { login, password, name, dateOfJoining, address, idNumber } = req.body;
-    const clientData = JSON.stringify({ name, dateOfJoining, address, idNumber, whoRegistered: { orgNum, ledgerUser } });
+    const { login, password, userType, name, dateOfJoining, address, idNumber } = req.body;
+    const clientData = JSON.stringify({ name, dateOfJoining, address, idNumber, whoRegistered: { orgNum, ledgerUser },userType });
 
     networkConnection
         .submitTransaction('createClient', orgNum, ledgerUser, [clientData])
@@ -19,7 +19,7 @@ exports.createClient = (req, res) => {
             if (result) {
                 result = result.toString();
                 if (result.length > 0) {
-                    await io.clientCreate(login, password, result, JSON.stringify({ orgNum, ledgerUser }));
+                    await io.clientCreate(login, password, userType, result, JSON.stringify({ orgNum, ledgerUser }));
                     return res.json({ message: `New client ${result} created`, ledgerId: result });
                 }
             }

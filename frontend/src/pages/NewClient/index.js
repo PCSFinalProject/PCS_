@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Flex, Box, Card, Heading, Text, Form, Field, Button, Loader } from 'rimble-ui';
+import { Flex, Box, Card, Heading, Text, Form, Field, Button, Loader ,Select} from 'rimble-ui';
 
 import qs from 'qs';
 
@@ -16,7 +16,10 @@ const Login = () => {
     const [submitDisabled, setSubmitDisabled] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
     const [newClientMsg, setNewClientMsg] = useState('');
-
+    const [userType, setUserType] = useState('client');
+    function handleRole(e) {
+        setUserType(e.target.value);
+    };
     function handleName(e) {
         setClientData({ ...clientData, name: e.target.value });
     };
@@ -118,7 +121,7 @@ const Login = () => {
             <Box mx={'auto'} my={'auto'} width={[1, 9 / 12, 7 / 12]}>
                 <Flex px={2} mx={'auto'} justifyContent='space-between'>
                     <Box my={'auto'}>
-                        <Heading as={'h2'} color={'primary'}>New Client</Heading>
+                        <Heading as={'h2'} color={'primary'}>Register</Heading>
                     </Box>
                     <Box my={'auto'}>
                         <Button onClick={handleClickOnBack}>Back</Button>
@@ -176,7 +179,7 @@ const Login = () => {
                     <Card>
                         <Flex mx={-3} flexWrap={"wrap"}>
                             <Box width={1} px={3}>
-                                <Field label="Login" width={1}>
+                                <Field label="UserName" width={1}>
                                     <Form.Input
                                         type="text"
                                         required
@@ -209,6 +212,25 @@ const Login = () => {
                                 </Field>
                             </Box>
                         </Flex>
+                        <Flex  mx={-3} alignItems={'center'}>
+                        <Box width={1} px={3}>
+                            <Field label="Role" width={1}>
+                                <Select
+                                    required
+                                    onChange={handleRole}
+                                    value={userType}
+                                    width={1}
+                                >
+              <option value={"customOfficer"}>Custom Officer</option>
+              <option value={"fi"}>Port Autority</option>
+              <option value={"shipAgency"}>Ship Agency</option>
+              <option value= {"trafficDept"}>Marine Department</option>
+              <option value= {"cargoHandling"}>CargoHandling</option>
+              </Select>
+                            </Field>
+                        </Box>
+
+</Flex>
                         <Flex mx={-3} alignItems={'center'}>
                             <Box px={3}>
                                 <Button type="submit" mt={2} disabled={submitDisabled}>

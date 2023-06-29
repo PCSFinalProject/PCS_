@@ -1,3 +1,4 @@
 node_modules/
 test-network/
 channel-artifacts/
+api/wallet/

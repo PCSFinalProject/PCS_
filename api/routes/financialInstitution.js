@@ -8,8 +8,8 @@ const { validate } = require('../middleware/validate');
 const credentials = require('../middleware/credentials');
 
 router.post('/createClient',
-    fiValidator.registration,
-    validate,
+    //fiValidator.registration,
+    //validate,
     credentials.getOrgCredentials,
     financialInsitutionController.createClient);
 
