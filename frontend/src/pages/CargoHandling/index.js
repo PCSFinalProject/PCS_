@@ -11,6 +11,7 @@ import api from '../../service/api';
 import UserData from '../../components/UserData';
 import { setUserData } from '../../functions/setUserData';
 import { Tab, Nav } from 'react-bootstrap';
+
 const CargoHandling = () => {
 
     const navigate = useNavigate();
@@ -81,7 +82,7 @@ const CargoHandling = () => {
         await axios.post('http://localhost:5000/cargoHandling/updateStatus', qs.stringify({ ...data, portId: clientData[4].value }))
             .then(res => {
                 if (res.status === 200) {
-                    setStatusUpdatedData(res.data);
+                setActiveTab('tab1');
                 } else {
                     console.log('Oopps... something wrong, status code ' + res.status);
                 }

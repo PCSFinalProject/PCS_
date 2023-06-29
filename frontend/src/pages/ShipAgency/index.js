@@ -230,10 +230,7 @@ const ShipAgency = () => {
               // ...
               if(activeTab === 'tab3'){
                 setShipListEntry(responseData);
-                if(response1 && response1.status === 200){
-                    const responseData1 = response1.data;
-                    setPortList(responseData1);
-                }
+              
                 }else if(activeTab === 'tab4'){
                     setShipListExit(responseData);
                 }

@@ -29,7 +29,7 @@ const TrafficDept = () => {
  
     // Import Clearence Tab
     const [data,setData] = useState(mockData);
-    const [berthAllocationData,setBerthAllocationData] = useState([]);
+    const [berthAllocationData,setBerthAllocationData] = useState(mockData);
     const [berthReuestData,setBerthReuestData] = useState([]);
     
     const handleTabSelect = (selectedTab) => {
