@@ -4,6 +4,7 @@
         "dateOfJoining": "1987-03-10",
         "address": "Mangalore",
         "idNumber": "873451",
+        "userType": "shipAgency",
         "whoRegistered": {
             "orgNum": 1,
             "ledgerUser": "PORT1"
@@ -14,6 +15,7 @@
         "dateOfJoining": "1991-11-19",
         "address": "Mangalore",
         "idNumber": "839047",
+        "userType": "customOfficer",
         "whoRegistered": {
             "orgNum": 2,
             "ledgerUser": "PORT2"
@@ -24,6 +26,7 @@
         "dateOfJoining": "2002-07-01",
         "address": "Mangalore",
         "idNumber": "123456",
+        "userType": "trafficDept",
         "whoRegistered": {
             "orgNum": 1,
             "ledgerUser": "PORT1"
@@ -34,6 +37,7 @@
         "dateOfJoining": "2002-04-05",
         "address": "Mangalore",
         "idNumber": "123123",
+        "userType": "cargoHandling",
         "whoRegistered": {
             "orgNum": 2,
             "ledgerUser": "PORT2"
