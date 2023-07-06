@@ -163,16 +163,12 @@ function berthAllocaton(X) {
       
       // Update the particle in the swarm array
       swarm[i] = particle;
-      console.log("Iteration " + iter + ", Particle " + i + ", Fitness " + newFitness); 
-      console.log("Position: " + JSON.stringify(particle.position));
+     
       
     }
-    console.log("Best solution: " + JSON.stringify(gbest.position));
-    console.log("Best fitness: " + gbest.fitness);
+   
   }
   
-  // Print out the best solution found by the algorithm
-  console.log("Best solution: " + JSON.stringify(gbest.position));
-  console.log("Best fitness: " + gbest.fitness);
+  
 
 module.exports = berthAllocaton;
