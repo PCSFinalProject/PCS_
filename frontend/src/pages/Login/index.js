@@ -120,7 +120,7 @@ const Login = () => {
         <div class="login_main">
             <div class ="Login_page" >
         <Form onSubmit={handleSubmit} >
-          <h2 className="text-center">PCS</h2>
+          <h2 class="text-center">PCS</h2>
           <Form.Group controlId="input1">
             <Form.Label> UserName</Form.Label>
             <Form.Control type="text" placeholder="Enter UserName" value={login} onChange={handleLogin} />

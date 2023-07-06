@@ -34,9 +34,9 @@ router.get('/getApprovedFis',
 
 
 
-router.post('/allotBerth', trafficDeptController.allocateBerth);
+router.post('/berth/allocate', trafficDeptController.allocateBerth);
 
-router.post('/requestEmpty',trafficDeptController.requestEmptyBerth)
+router.post('/berth/requestEmpty',trafficDeptController.requestEmptyBerth)
 
 router.get('/berth/allocated/:portId',trafficDeptController.getBerthAlllocated)
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { Flex, Box, Card, Heading, Text, Form,Field,Button, Loader, Select, Input } from 'rimble-ui'
+import { Flex, Box, Card, Heading, Text, Form,Field,Button, Loader, Select, Input ,Table} from 'rimble-ui'
    
 
 import qs from 'qs';
@@ -46,7 +46,7 @@ const ShipAgency = () => {
             customsCleared: false,
             unloading: false,
             country: '',
-            portId: '',
+            portId: 'PORT1',
           });
           const handleInputChangeShip = (event) => {
             const { name, value } = event.target;
@@ -133,6 +133,7 @@ const ShipAgency = () => {
    
         console.log("formData",formData);
         formData.shipAgencyId = cookies.ledgerId;
+        formData.portId = clientData[4].value;
         // Perform form submission logic here
         console.log('Selected Option:', selectedOption);
          api.post('/shipAgency/create/ship', qs.stringify({
@@ -218,18 +219,23 @@ const ShipAgency = () => {
              
             } else if (activeTab === 'tab3') {
               response = await axios.get(`http://localhost:5000/shipAgency/entry/requests/${cookies.ledgerId}`);
+              setShipListEntry(response.data);
+            
             //   response1 = await api.get('http://localhost:5000/fi/getAllPorts');
             } else if (activeTab === 'tab4') {
               response = await axios.get(`http://localhost:5000/shipAgency/exit/requests/${cookies.ledgerId}`);
+              setShipListExit(response.data);
             }
     
             // Process the response data
-            else if (response && response.status === 200) {
+            else if (response && (response.status === 200 || response.status=== 304) ){
               const responseData = response.data;
               // Update the necessary state variables with the response data
               // ...
+              console.log(shipListEntry,'Entry');
               if(activeTab === 'tab3'){
                 setShipListEntry(responseData);
+                
               
                 }else if(activeTab === 'tab4'){
                     setShipListExit(responseData);

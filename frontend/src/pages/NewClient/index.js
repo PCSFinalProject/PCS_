@@ -78,7 +78,7 @@ const Login = () => {
         if (validated && isLoading) {
             try {
                 api
-                    .post('/fi/createClient', qs.stringify(clientData))
+                    .post('/fi/createClient', qs.stringify({...clientData,userType}))
                     .then(res => {
                         console.log(res);
                         if (res.status === 200) {
@@ -221,6 +221,7 @@ const Login = () => {
                                     value={userType}
                                     width={1}
                                 >
+                                    <option value="">Select an option</option>
               <option value={"customOfficer"}>Custom Officer</option>
               <option value={"fi"}>Port Autority</option>
               <option value={"shipAgency"}>Ship Agency</option>

@@ -1,10 +1,10 @@
 const trafficDeptService  = require('../services/trafficDeptService');
-const {  berthAllocaton } = require('../utils/berth');
+// const {  berthAllocaton } = require('../utils/berth');
 
 const allocateBerth = async (req, res) => {
     try{
         const { shipId } = req.body;
-        const berthID = berthAllocaton(req.body,portId);
+        const berthID =     2;
         const ship = await trafficDeptService.allocateBerth(shipId, berthID);
         res.status(200).json(ship);
     }catch(err){

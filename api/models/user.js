@@ -19,7 +19,7 @@ const UserSchema = Schema(
         userType: {
             type: String,
             required: true,
-            default:'client'
+          default:'client'
         },
         ledgerId: {
             type: String,

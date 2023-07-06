@@ -17,8 +17,8 @@
         "idNumber": "839047",
         "userType": "customOfficer",
         "whoRegistered": {
-            "orgNum": 2,
-            "ledgerUser": "PORT2"
+            "orgNum": 1,
+            "ledgerUser": "PORT1"
         }
     },
     {
@@ -39,8 +39,8 @@
         "idNumber": "123123",
         "userType": "cargoHandling",
         "whoRegistered": {
-            "orgNum": 2,
-            "ledgerUser": "PORT2"
+            "orgNum": 1,
+            "ledgerUser": "PORT1"
         }
     },
     {
@@ -69,8 +69,8 @@
         "address": "Chennai",
         "idNumber": "654123",
         "whoRegistered": {
-            "orgNum": 2,
-            "ledgerUser": "PORT2"
+            "orgNum": 1,
+            "ledgerUser": "PORT1"
         }
     }
 ]

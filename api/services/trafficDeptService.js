@@ -1,6 +1,6 @@
 
 const trafficDept = require('../db/trafficDept');
-const berthAllocaton = require('../utils/berth');
+// const berthAllocaton = require('../utils/berth');
 
 const allocateBerth = async (shipId,berthId) => {
     try{

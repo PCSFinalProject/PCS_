@@ -48,7 +48,7 @@ const CargoHandling = () => {
         await axios.post('http://localhost:5000/cargoHandling/unloaded/', qs.stringify({...data,portId:clientData[4].value}))
             .then(res => {
                 if (res.status === 200) {
-                    setUloadingData(res.data);
+                    setActiveTab('tab1');
                 } else {
                     console.log('Oopps... something wrong, status code ' + res.status);
                 }
@@ -65,7 +65,7 @@ const CargoHandling = () => {
         await axios.post('http://localhost:5000/cargoHandling/loaded', qs.stringify({ ...data, portId: clientData[4].value}))
             .then(res => {
                 if (res.status === 200) {
-                    setLoadingData(res.data);
+                    setActiveTab('tab1');
                 } else {
                     console.log('Oopps... something wrong, status code ' + res.status);
                 }

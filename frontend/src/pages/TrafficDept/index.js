@@ -50,7 +50,6 @@ const TrafficDept = () => {
             .then(res => {
                 if (res.status === 200) {
                     console.log(res.data);
-                    setBerthAllocationData(res.data);
                     setActiveTab('tab2');
                 } else {
                     console.log('Oopps... something wrong, status code ' + res.status);
@@ -73,7 +72,7 @@ const TrafficDept = () => {
             .then(res => {
                 if (res.status === 200) {
                     console.log(res.data);
-                    setBerthAllocationData(res.data);
+                  
                     setActiveTab('tab3');
                 } else {
                     console.log('Oopps... something wrong, status code ' + res.status);

@@ -5,13 +5,15 @@ const User = require('../models/user');
 const io = require('../db/io');
 const networkConnection = require('../utils/networkConnection');
 
-exports.createClient = (req, res) => {
+exports.createClient = async (req, res) => {
     console.log(req.body,"req received")
     const orgNum = req.orgNum;
     const ledgerUser = req.ledgerUser;
 
     const { login, password, userType, name, dateOfJoining, address, idNumber } = req.body;
-    const clientData = JSON.stringify({ name, dateOfJoining, address, idNumber, whoRegistered: { orgNum, ledgerUser },userType });
+    console.log(userType);
+    const clientData = JSON.stringify({ name, dateOfJoining, address, idNumber, whoRegistered: { orgNum, ledgerUser } });
+   
 
     networkConnection
         .submitTransaction('createClient', orgNum, ledgerUser, [clientData])
