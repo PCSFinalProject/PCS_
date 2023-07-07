@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { Flex, Box, Card, Heading, Text, Form,Field,Button, Loader, Select, FileUpload, Input } from 'rimble-ui'
-   
+import { Flex, Box, Card, Heading, Text, Form, Field, Button, Loader ,Table, } from 'rimble-ui';
 
 import qs from 'qs';
 import axios from 'axios';
-
+import mockData from '../../data/initialShipAgencyData.json'
 import api from '../../service/api';
 import UserData from '../../components/UserData';
 import { setUserData } from '../../functions/setUserData';
 import { Tab, Nav } from 'react-bootstrap';
-const Client = () => {
+const CustomOfficer = () => {
 
     const navigate = useNavigate();
     const [cookies, setCookie, removeCookie] = useCookies();
@@ -24,61 +23,83 @@ const Client = () => {
     const [fiIdRemove, setFiIdRemove] = useState('');
     const [removedMsg, setRemovedMsg] = useState('');
     const [isLoadingRemove, setIsLoadingRemove] = useState(false);
-    const [activeTab, setActiveTab] = useState('tab1');
-  
-      const [selectedOption, setSelectedOption] = useState('');
-      const [files, setFiles] = useState([]);
-      const [input1, setInput1] = useState('');
-      const [input2, setInput2] = useState('');
-      const [input3, setInput3] = useState('');
+    const [activeTab, setActiveTab] = useState(0);
+    const [importClearenceData, setImportClearenceData] = useState([]);
+    const [exportClearenceData, setExportClearenceData] = useState([]);
     
-      const handleOptionChange = (event) => {
-        setSelectedOption(event.target.value);
-      };
-    
-      const handleFileUpload = (event) => {
-        const uploadedFiles = Array.from(event.target.files);
-        setFiles(uploadedFiles);
-      };
-    
-      const handleInputChange1 = (event) => {
-        setInput1(event.target.value);
-      };
-    
-      const handleInputChange2 = (event) => {
-        setInput2(event.target.value);
-      };
-    
-      const handleInputChange3 = (event) => {
-        setInput3(event.target.value);
-      };
-    
-      const handleSubmit = (event) => {
-        event.preventDefault();
-    
-        // Perform form submission logic here
-        console.log('Selected Option:', selectedOption);
-        console.log('Input 1:', input1);
-        console.log('Input 2:', input2);
-        console.log('Input 3:', input3);
-    
-        // Reset form fields
-        setSelectedOption('');
-        setInput1('');
-        setInput2('');
-        setInput3('');
-      };
-    const handleTabSelect = (selectedTab) => {
-      setActiveTab(selectedTab);
+
+    const handleCustomSubmitImportClearenceAccept = async(rowData) => {
+        await axios.post(`http://localhost:5000/customOfficer/approveImport`, {
+           ...rowData,
+            portId:clientData[4].value,
+         
+    })
+    .then(res => {
+        console.log(res);
+        console.log(res.data);
+    })
+    .catch(err => {
+        console.log(err);
+    })
+
     };
+    const handleCustomSubmitImportClearenceReject = async(rowData) => {
+        await axios.post(`http://localhost:5000/customOfficer/rejectImport`, {
+              ...rowData,
+            portId:clientData[4].value,
+        })
+        .then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    };
+    const handleCustomSubmitExportClearenceAccept = async(rowData) => {
+        await axios.post(`http://localhost:5000/customOfficer/approveExport`, {
+              ...rowData,
+                portId:clientData[4].value,
+        })
+        .then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    };
+    const handleCustomSubmitExportClearenceReject = async(rowData) => {
+        await axios.post(`http://localhost:5000/customOfficer/rejectExport`, {
+                ...rowData,
+              
+                portId:clientData[4].value,
+        })
+        .then(res => {
+            console.log(res);
+            console.log(res.data);
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    };
+
     function handleChooseFiApprove(e) {
         setFiIdApprove(e.target.value.toUpperCase());
     };
 
+   
+
+// Import Clearence Tab
+    const [data,setData] = useState(mockData);
     function handleChooseFiRemove(e) {
         setFiIdRemove(e.target.value.toUpperCase());
     };
 
+    // this is for tab
+    const handleTabSelect = (selectedTab) => {
+        setActiveTab(selectedTab);
+      };
     useEffect(() => {
         try {
             axios.all([
@@ -108,6 +129,46 @@ const Client = () => {
             return function cleanup() { }
         }
     }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            // Make the appropriate API request based on the activeTab value
+            let response=null;
+           if (activeTab === 'tab2') {
+               response = await axios.get(`http://localhost:5000/customOfficer/ImportClearance/${clientData[4].value}/IMPORT`);
+              setImportClearenceData(mockData)
+            //   response1 = await api.get('http://localhost:5000/fi/getAllPorts');
+            } else if (activeTab === 'tab3') {
+              response = await axios.get(`http://localhost:5000/customOfficer/ExportClearance/${clientData[4].value}/EXPORT`);
+            }
+    
+            // Process the response data
+            if (response && response.status === 200) {
+              const responseData = response.data;
+              // Update the necessary state variables with the response data
+              // ...
+              if(activeTab === 'tab2'){
+                setImportClearenceData(responseData);
+                
+                
+                }else if(activeTab === 'tab3'){
+                    setExportClearenceData(responseData);
+                }
+            } else {
+              console.log('Oopps... something went wrong, status code ' + response?.status);
+            }
+          } catch (error) {
+            console.log('Oopps... something went wrong');
+            console.log(error);
+          }
+        };
+        if(activeTab === 'tab2' || activeTab === 'tab3')
+        fetchData();
+      }, [activeTab,cookies,fiIdApprove]);
+
+
+
 
     useEffect(() => {
         if (isLoadingApprove) {
@@ -233,26 +294,26 @@ const Client = () => {
                         <Heading as={'h1'} color='primary'>PCS</Heading>
                     </Box>
                     <Box my={'auto'}>
-                        <Button onClick={handleClickLogout}>Logout</Button>
+                        <Button variant="warning" onClick={handleClickLogout}>Logout</Button>
                     </Box>
                 </Flex>
                 <Card>
-                    <Heading as={'h2'}>Client data</Heading>
+                    <Heading as={'h2'}>Custom Agengy Data</Heading>
                     <UserData userData={clientData} />
                 </Card>
 
-                <Tab.Container activeKey={activeTab} onSelect={handleTabSelect}>
+<Tab.Container activeKey={activeTab} onSelect={handleTabSelect}>
       <Nav variant="tabs">
         <Nav.Item>
           <Nav.Link eventKey="tab1">Manage Port</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="tab2">IMPORT</Nav.Link>
+          <Nav.Link eventKey="tab2">Import Clearence</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="tab3">EXPORT</Nav.Link>
+          <Nav.Link eventKey="tab3">Export Clearence</Nav.Link>
         </Nav.Item>
-      </Nav>
+        </Nav>  
       <Tab.Content>
         <Tab.Pane eventKey="tab1">
                 <Card mt={20}>
@@ -317,7 +378,7 @@ const Client = () => {
                         </Flex>
                         <Flex mx={-3} alignItems={'center'}>
                             <Box px={3}>
-                                <Button type="submit" disabled={isLoadingRemove}>
+                                <Button variant="danger" type="submit" disabled={isLoadingRemove}>
                                     {isLoadingRemove ? <Loader color="white" /> : <p>Remove</p>}
                                 </Button>
                             </Box>
@@ -331,35 +392,74 @@ const Client = () => {
                 </Card>
                 </Tab.Pane>
         <Tab.Pane eventKey="tab2">
-        <Form onSubmit={handleSubmit}>
-      <Field label="Dropdown" width={1}>
-        <Select value={selectedOption} onChange={handleOptionChange}>
-          <option value="">Select an option</option>
-          <option value="option1">Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
-        </Select>
-      </Field>
-      <Field label="Files" width={1}>
-        <Input type="file" accept="application/zip" onChange={handleFileUpload} multiple />
-      </Field>
-      <Field label="Input 1" width={1}>
-        <Input value={input1} onChange={handleInputChange1} />
-      </Field>
-      <Field label="Input 2" width={1}>
-        <Input value={input2} onChange={handleInputChange2} />
-      </Field>
-      <Field label="Input 3" width={1}>
-        <Input value={input3} onChange={handleInputChange3} />
-      </Field>
-      <Flex justifyContent="flex-end" mt={3}>
-        <Button type="submit">Submit</Button>
-      </Flex>
-    </Form>
-        </Tab.Pane>
+        <Table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Cargo</th>
+          <th>Destination</th>
+            <th>country</th>
+          <th>Action</th>
+          <th>Reject</th>
+        </tr>
+      </thead>
+      <tbody>
+        {importClearenceData.map((rowData) => (
+          <tr key={rowData.id}>
+            <td>{rowData.id}</td>
+            <td>{rowData.name}</td>
+            <td>{rowData.cargo}</td>
+            <td>{rowData.destination}</td>
+            <td>{rowData.country}</td>
+            <td>
+            <Button variant="success" onClick={() => handleCustomSubmitImportClearenceAccept(rowData)}>Accept</Button>
+            </td>
+            <td>
+            <Button variant="danger" onClick={() => handleCustomSubmitImportClearenceReject(rowData)}>Reject</Button>
+
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
+        </Tab.Pane >
         <Tab.Pane eventKey="tab3">
-          <p>Content for Tab 3</p>
+        <Table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Cargo</th>
+          <th>Destination</th>
+            <th>country</th>
+          <th>Accept</th>
+          <th>Reject</th>
+        </tr>
+      </thead>
+      <tbody>
+        {exportClearenceData.map((rowData) => (
+          <tr key={rowData.id}>
+            <td>{rowData.id}</td>
+            <td>{rowData.name}</td>
+            <td>{rowData.cargo}</td>
+            <td>{rowData.destination}</td>
+            <td>{rowData.country}</td>
+            <td>
+            <Button variant="success" onClick={() => handleCustomSubmitExportClearenceAccept(rowData)}>Accept</Button>
+            </td>
+            <td>
+            <Button variant ="danger" onClick={() => handleCustomSubmitExportClearenceReject(rowData)}>Reject</Button>
+
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </Table>
         </Tab.Pane>
+       
+
+
       </Tab.Content>
     </Tab.Container>
             </Box>
@@ -367,4 +467,4 @@ const Client = () => {
     );
 }
 
-export default Client;
+export default CustomOfficer;

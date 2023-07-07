@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { Flex, Box, Card, Heading, Text, Form,Field,Button, Loader, Select, FileUpload, Input } from 'rimble-ui'
+import { Flex, Box, Card, Heading, Text, Form,Field,Button, Loader, Select, Input ,Table} from 'rimble-ui'
    
 
 import qs from 'qs';
@@ -11,7 +11,8 @@ import api from '../../service/api';
 import UserData from '../../components/UserData';
 import { setUserData } from '../../functions/setUserData';
 import { Tab, Nav } from 'react-bootstrap';
-const Client = () => {
+import Fi from '../Fi';
+const ShipAgency = () => {
 
     const navigate = useNavigate();
     const [cookies, setCookie, removeCookie] = useCookies();
@@ -25,52 +26,149 @@ const Client = () => {
     const [removedMsg, setRemovedMsg] = useState('');
     const [isLoadingRemove, setIsLoadingRemove] = useState(false);
     const [activeTab, setActiveTab] = useState('tab1');
-  
+    const [selectedOptionShip, setSelectedOptionShip] = useState('');
       const [selectedOption, setSelectedOption] = useState('');
-      const [files, setFiles] = useState([]);
-      const [input1, setInput1] = useState('');
-      const [input2, setInput2] = useState('');
-      const [input3, setInput3] = useState('');
-    
-      const handleOptionChange = (event) => {
+        const [selectedOptionShipExit, setSelectedOptionShipExit] = useState('');
+        const [shipListEntry, setShipListEntry] = useState([]);
+        const [shipListExit, setShipListExit] = useState([]);
+        const [portId, setPortId] = useState('');
+        const [portList, setPortList] = useState([]);
+
+        const [formData, setFormData] = useState({
+            id: '',
+            name: '',
+            type: '',
+            capacity: 0,
+            cargo: '',
+            destination: '',
+            status: '',
+            berthId: '',
+            customsCleared: false,
+            unloading: false,
+            country: '',
+            portId: 'PORT1',
+          });
+          const handleInputChangeShip = (event) => {
+            const { name, value } = event.target;
+            setFormData((prevFormData) => ({
+              ...prevFormData,
+              [name]: value,
+            }));
+            console.log(formData,"forData");
+          };
+
+      // This is Request Entry
+      const handleRequestEntry = async (event) => {
+        
+          console.log('Selected Option:', selectedOption);
+            await axios.post('http://localhost:5000/shipAgency/request/entry', qs.stringify({
+                shipId: selectedOptionShip,
+                shipAgencyId: cookies.ledgerId,
+                portId: selectedOption,
+            }), {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                }
+            }).then((response) => {
+                console.log(response);
+                if (response.data.message) {
+                    setApprovedMsg(response.data.message);
+                }
+            }).catch((error) => {
+                console.log(error);
+            });
+
+
+        event.preventDefault();
+        setActiveTab('tab3');
+        };
+
+
+      const handleOptionChangePort = (event) => {
         setSelectedOption(event.target.value);
       };
-    
-      const handleFileUpload = (event) => {
-        const uploadedFiles = Array.from(event.target.files);
-        setFiles(uploadedFiles);
+      const handleOptionChangeShipEntry = (event) => {
+        setSelectedOptionShip(event.target.value);
+        console.log(event.target.value);
       };
     
-      const handleInputChange1 = (event) => {
-        setInput1(event.target.value);
-      };
-    
-      const handleInputChange2 = (event) => {
-        setInput2(event.target.value);
-      };
-    
-      const handleInputChange3 = (event) => {
-        setInput3(event.target.value);
-      };
-    
-      const handleSubmit = (event) => {
+      const handleOptionChangeRequestExit = async(event) => {
+        console.log(event.target.value);
+        setSelectedOptionShipExit(event.target.value);
+     
+
+         
+        };
+        const handleRequestExist = async(event) => {
+            console.log('Selected Option:', selectedOptionShipExit);
+        
+            await api.post('/shipAgency/request/exit', qs.stringify({
+                shipId: selectedOptionShipExit,
+          }), {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            }
+        }).then((response) => {
+            console.log(response);
+            if (response.data.message) {
+                setApprovedMsg(response.data.message);
+            } else {
+                setApprovedMsg('Error');
+            }
+        }).catch((error) => {
+            console.log(error);
+            setApprovedMsg('Error');
+        });
         event.preventDefault();
+        setActiveTab('tab4');
+            };
+
+        
+        const handleOptionChangeRequest = (event) => {
+          setSelectedOption(event.target.value);
+        };
+     
     
+      const handleSubmit = async () => {
+   
+        console.log("formData",formData);
+        formData.shipAgencyId = cookies.ledgerId;
+        formData.portId = clientData[4].value;
         // Perform form submission logic here
         console.log('Selected Option:', selectedOption);
-        console.log('Input 1:', input1);
-        console.log('Input 2:', input2);
-        console.log('Input 3:', input3);
+         api.post('/shipAgency/create/ship', qs.stringify({
+            ...formData})).then((response) => {
+            console.log(response);
+            if (response.data) {
+                console.log();
+            } else {
+               
+                console.log();
+            }
+        }).catch((error) => {
+            console.log(error);
+        });
+        // event.preventDefault();
+
+      
     
-        // Reset form fields
-        setSelectedOption('');
-        setInput1('');
-        setInput2('');
-        setInput3('');
+        // // Reset form fields
+        // setSelectedOption('');
+      
       };
+
+
+// this is for tab
     const handleTabSelect = (selectedTab) => {
       setActiveTab(selectedTab);
     };
+    // This is Ship create Tab 
+  
+    
+
+
+
+    // This Is old 
     function handleChooseFiApprove(e) {
         setFiIdApprove(e.target.value.toUpperCase());
     };
@@ -91,6 +189,7 @@ const Client = () => {
                             clientData = clientData.data.clientData;
                             approvedFis = approvedFis.data.approvedFis;
                             setUserData(clientData, setClientData);
+                            console.log(clientData,"clientData");
                             setApprovedFiList(approvedFis);
                         } else {
                             console.log('Oopps... something wrong, status code ' + clientData.status);
@@ -108,6 +207,52 @@ const Client = () => {
             return function cleanup() { }
         }
     }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            // Make the appropriate API request based on the activeTab value
+            let response=null,response1=null;
+            if (activeTab === 'tab1') {
+          
+            } else if (activeTab === 'tab2') {
+             
+            } else if (activeTab === 'tab3') {
+              response = await axios.get(`http://localhost:5000/shipAgency/entry/requests/${cookies.ledgerId}`);
+              setShipListEntry(response.data);
+            
+            //   response1 = await api.get('http://localhost:5000/fi/getAllPorts');
+            } else if (activeTab === 'tab4') {
+              response = await axios.get(`http://localhost:5000/shipAgency/exit/requests/${cookies.ledgerId}`);
+              setShipListExit(response.data);
+            }
+    
+            // Process the response data
+            else if (response && (response.status === 200 || response.status=== 304) ){
+              const responseData = response.data;
+              // Update the necessary state variables with the response data
+              // ...
+              console.log(shipListEntry,'Entry');
+              if(activeTab === 'tab3'){
+                setShipListEntry(responseData);
+                
+              
+                }else if(activeTab === 'tab4'){
+                    setShipListExit(responseData);
+                }
+            } else {
+              console.log('Oopps... something went wrong, status code ' + response?.status);
+            }
+          } catch (error) {
+            console.log('Oopps... something went wrong');
+            console.log(error);
+          }
+        };
+    if(activeTab === 'tab3' || activeTab === 'tab4')
+        fetchData();
+      }, [activeTab]);
+
+
 
     useEffect(() => {
         if (isLoadingApprove) {
@@ -237,22 +382,25 @@ const Client = () => {
                     </Box>
                 </Flex>
                 <Card>
-                    <Heading as={'h2'}>Client data</Heading>
+                    <Heading as={'h2'}>Ship Agency Data</Heading>
                     <UserData userData={clientData} />
                 </Card>
 
-                <Tab.Container activeKey={activeTab} onSelect={handleTabSelect}>
+                <Tab.Container activeKey={activeTab} defaultActiveKey={activeTab} onSelect={handleTabSelect}>
       <Nav variant="tabs">
         <Nav.Item>
           <Nav.Link eventKey="tab1">Manage Port</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="tab2">IMPORT</Nav.Link>
+          <Nav.Link eventKey="tab2">SHIPMENT CREATION</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="tab3">EXPORT</Nav.Link>
+          <Nav.Link eventKey="tab3">Request Entry</Nav.Link>
         </Nav.Item>
-      </Nav>
+        <Nav.Item>
+            <Nav.Link eventKey="tab4">Request Exist</Nav.Link>
+            </Nav.Item>
+        </Nav>  
       <Tab.Content>
         <Tab.Pane eventKey="tab1">
                 <Card mt={20}>
@@ -331,35 +479,79 @@ const Client = () => {
                 </Card>
                 </Tab.Pane>
         <Tab.Pane eventKey="tab2">
-        <Form onSubmit={handleSubmit}>
-      <Field label="Dropdown" width={1}>
-        <Select value={selectedOption} onChange={handleOptionChange}>
+       
+    <Flex flexWrap="wrap">
+      <Field label="Name" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="name" value={formData.name} onChange={handleInputChangeShip} required />
+      </Field>
+        <Field label=" COUNTRY" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="country" value={formData.country} onChange={handleInputChangeShip} required />
+      </Field>
+      <Field label="Type" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="type" value={formData.type} onChange={handleInputChangeShip} required/>
+      </Field>
+      <Field label="capacity" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="capacity" value={formData.capacity} type ="number" onChange={handleInputChangeShip} required/>
+      </Field>
+      <Field label="captain" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="captain" value={formData.size} onChange={handleInputChangeShip} required/>
+      </Field>
+      <Field label="Cargo" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="cargo" value={formData.cargo} onChange={handleInputChangeShip} required/>
+      </Field>
+      <Field label="Destination" width={[1, 1/2]} pr={[0, 2]}>
+        <Input name="destination" value={formData.destination} onChange={handleInputChangeShip}required/>
+      </Field>
+    
+      </Flex>
+ 
+      <Flex justifyContent="flex-end" mt={3}>
+        <Button type="submit" onClick={handleSubmit}>Submit</Button>
+      </Flex>
+   
+        </Tab.Pane >
+        <Tab.Pane eventKey="tab3">
+      
+        <Field label="Port" width={1}>
+        <Select value={selectedOption} onChange={handleOptionChangePort} required>
           <option value="">Select an option</option>
-          <option value="option1">Option 1</option>
-          <option value="option2">Option 2</option>
-          <option value="option3">Option 3</option>
+          {approvedFiList.map((fi) => (
+            <option value={fi}>{fi}</option>
+            ))}
         </Select>
       </Field>
-      <Field label="Files" width={1}>
-        <Input type="file" accept="application/zip" onChange={handleFileUpload} multiple />
-      </Field>
-      <Field label="Input 1" width={1}>
-        <Input value={input1} onChange={handleInputChange1} />
-      </Field>
-      <Field label="Input 2" width={1}>
-        <Input value={input2} onChange={handleInputChange2} />
-      </Field>
-      <Field label="Input 3" width={1}>
-        <Input value={input3} onChange={handleInputChange3} />
-      </Field>
-      <Flex justifyContent="flex-end" mt={3}>
-        <Button type="submit">Submit</Button>
+      <Field label="Ship" width={1}>
+        <Select value={selectedOptionShip} onChange={handleOptionChangeShipEntry} required>
+            <option value="">Select an option</option>
+            {shipListEntry.map((ship) => (
+                <option value={ship.shipId}>{ship.name}</option>
+            ))}
+         
+        </Select>
+        </Field>
+        
+      <Flex justifyContent="centre" mt={3}>
+        <Button type="submit" onClick={handleRequestEntry}>Request</Button>
       </Flex>
-    </Form>
+         
         </Tab.Pane>
-        <Tab.Pane eventKey="tab3">
-          <p>Content for Tab 3</p>
+        <Tab.Pane eventKey="tab4">
+ 
+        <Field label="Ship" width={1}>
+        <Select value={selectedOptionShipExit} onChange={handleOptionChangeRequestExit} required>
+            <option value="">Select an option</option>
+            {shipListExit.map((ship) => (
+                <option value={ship.shipId}>{ship.name}</option>
+            ))}
+        </Select>
+        </Field>
+         <Flex justifyContent="centre" mt={4}>
+        <Button type="submit" onClick={handleRequestExist}>Request</Button>
+      </Flex>
+
         </Tab.Pane>
+
+
       </Tab.Content>
     </Tab.Container>
             </Box>
@@ -367,4 +559,4 @@ const Client = () => {
     );
 }
 
-export default Client;
+export default ShipAgency;

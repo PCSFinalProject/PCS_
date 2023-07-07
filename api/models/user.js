@@ -19,7 +19,7 @@ const UserSchema = Schema(
         userType: {
             type: String,
             required: true,
-            default: 'client'
+          default:'client'
         },
         ledgerId: {
             type: String,
@@ -63,16 +63,16 @@ UserSchema.pre('save', function (next) {
     }
 });
 
-UserSchema.path('login').validate((login) => {
-    return login.length >= 1 && login.length <= 100;
-}, 'Login length must be between 1 and 100');
+// UserSchema.path('login').validate((login) => {
+//     return login.length >= 1 && login.length <= 100;
+// }, 'Login length must be between 1 and 100');
 
-UserSchema.path('password').validate((password) => {
-    return password.length >= 6;
-}, 'Password length must be greater than or equal to 6');
+// UserSchema.path('password').validate((password) => {
+//     return password.length >= 6;
+// }, 'Password length must be greater than or equal to 6');
 
-UserSchema.path('userType').validate((type) => {
-    return ['client', 'fi'].includes(type);
-}, 'User type must be client or fi');
+// UserSchema.path('userType').validate((type) => {
+//     return ['client', 'fi','customOfficer','shipAgency','trafficDept','cargoHandling'].includes(type);
+// }, 'User type not correct');
 
 module.exports = mongoose.model('User', UserSchema);

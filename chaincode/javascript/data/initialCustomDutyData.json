@@ -1,0 +1,192 @@
+[
+    {
+      "id": "4321",
+      "name": "Port of Long Beach Customs Department",
+      "address": "1 Harbor Plaza, Long Beach, CA 90802",
+      "phoneNumber": "1-562-590-4125",
+      "emailAddress": "portoflongbeach@polb.com",
+      "website": "https://www.polb.com/",
+      "hoursOfOperation": "Monday-Friday, 9am-6pm",
+      "contactPerson": "Emily Johnson, Director of Customs Operations",
+      "clearanceDocuments": [
+        "Commercial Invoice",
+        "Customs Entry Form",
+        "Packing List",
+        "Certificate of Origin"
+      ],
+      "cargoInspectionProcedures": [
+        "Physical Inspection",
+        "X-Ray Inspection",
+        "Chemical Analysis"
+      ],
+      "fees": [
+        "Clearance Fee",
+        "Inspection Fee",
+        "Storage Fee"
+      ]
+    },
+    {
+      "id": "9876",
+      "name": "Port of New York and New Jersey Customs Department",
+      "address": "2 Port Street, Newark, NJ 07114",
+      "phoneNumber": "1-973-522-2200",
+      "emailAddress": "portofny-nj@panynj.gov",
+      "website": "https://www.panynj.gov/port-authority/en/index.html",
+      "hoursOfOperation": "Monday-Friday, 8:30am-5pm",
+      "contactPerson": "Michael Brown, Director of Customs Operations",
+      "clearanceDocuments": [
+        "Bill of Lading",
+        "Packing List",
+        "Commercial Invoice",
+        "Customs Entry Form",
+        "Certificate of Origin"
+      ],
+      "cargoInspectionProcedures": [
+        "Physical Inspection",
+        "X-Ray Inspection",
+        "Radiation Detection"
+      ],
+      "fees": [
+        "Customs Brokerage Fee",
+        "Inspection Fee",
+        "Storage Fee",
+        "Duty Fee"
+      ]
+    },
+    {
+      "id": "6543",
+      "name": "Port of Rotterdam Customs Department",
+      "address": "Maasvlakte 2, 3199 LX Rotterdam, Netherlands",
+      "phoneNumber": "+31 (0)10 252 10 00",
+      "emailAddress": "customs@portofrotterdam.com",
+      "website": "https://www.portofrotterdam.com/",
+      "hoursOfOperation": "Monday-Friday, 9am-6pm",
+      "contactPerson": "Sophie de Jong, Director of Customs Operations",
+      "clearanceDocuments": [
+        "Commercial Invoice",
+        "Customs Entry Form",
+        "Packing List",
+        "Certificate of Origin"
+      ],
+      "cargoInspectionProcedures": [
+        "Physical Inspection",
+        "X-Ray Inspection",
+        "Sniffer Dog Inspection"
+      ],
+      "fees": [
+        "Clearance Fee",
+        "Inspection Fee",
+        "Storage Fee"
+      ]
+    },
+    {
+      "id": "8765",
+      "name": "Port of Shanghai Customs Department",
+      "address": "200 Yingbin 1st Road, Pudong, Shanghai, China",
+      "phoneNumber": "+86-21-65077889",
+      "emailAddress": "customs@portshanghai.com",
+      "website": "https://en.portshanghai.com.cn/",
+      "hoursOfOperation": "Monday-Friday, 8am-6pm",
+      "contactPerson": "Li Wei, Director of Customs Operations",
+      "clearanceDocuments": [
+        "Bill of Lading",
+        "Commercial Invoice",
+        "Customs Entry Form",
+        "Packing List",
+        "Certificate of Origin"
+      ],
+      "cargoInspectionProcedures": [
+        "Physical Inspection",
+        "X-Ray Inspection",
+        "Electronic Manifest Verification"
+      ],
+      "fees": [
+        "Customs Declaration Fee",
+        "Inspection Fee",
+        "Storage Fee",
+        "Security Fee"
+      ]
+    },
+    {
+      "id": "2345",
+      "name": "Port of Hamburg Customs Department",
+      "address": "Großer Grasbrook 4, 20457 Hamburg, Germany",
+      "phoneNumber": "+49 40 37709-0",
+      "emailAddress": "customs@hafen-hamburg.de",
+      "website": "https://www.hafen-hamburg.de/",
+      "hoursOfOperation": "Monday-Friday, 8am-5pm",
+      "contactPerson": "Andreas Müller, Director of Customs Operations",
+      "clearanceDocuments": [
+        "Bill of Lading",
+        "Commercial Invoice",
+        "Customs Entry Form",
+        "Packing List",
+        "Certificate of Origin"
+      ],
+      "cargoInspectionProcedures": [
+        "Physical Inspection",
+        "X-Ray Inspection",
+        "Hazardous Material Sampling"
+      ],
+      "fees": [
+        "Customs Clearance Fee",
+        "Inspection Fee",
+        "Storage Fee"
+      ]
+    },
+    {
+      "id": "3456",
+      "name": "Port of Sydney Customs Department",
+      "address": "GPO Box 199, Sydney, NSW 2001, Australia",
+      "phoneNumber": "+61 2 9394 7600",
+      "emailAddress": "customs@portauthoritynsw.com.au",
+      "website": "https://www.portauthoritynsw.com.au/",
+      "hoursOfOperation": "Monday-Friday, 9am-5pm",
+      "contactPerson": "Emma Wilson, Director of Customs Operations",
+      "clearanceDocuments": [
+        "Bill of Lading",
+        "Commercial Invoice",
+        "Customs Entry Form",
+        "Packing List",
+        "Certificate of Origin"
+      ],
+      "cargoInspectionProcedures": [
+        "Physical Inspection",
+        "X-Ray Inspection",
+        "Sniffer Dog Inspection"
+      ],
+      "fees": [
+        "Customs Processing Fee",
+        "Inspection Fee",
+        "Storage Fee"
+      ]
+    },
+    {
+      "id": "5678",
+      "name": "Port of Tokyo Customs Department",
+      "address": "2-1-1 Aomi, Koto-ku, Tokyo 135-0064, Japan",
+      "phoneNumber": "+81-3-3599-6460",
+      "emailAddress": "customs@tokyoport.or.jp",
+      "website": "https://www.tptc.co.jp/english/",
+      "hoursOfOperation": "Monday-Friday, 8:30am-5:15pm",
+      "contactPerson": "Satoshi Nakamura, Director of Customs Operations",
+      "clearanceDocuments": [
+        "Bill of Lading",
+        "Commercial Invoice",
+        "Customs Entry Form",
+        "Packing List",
+        "Certificate of Origin"
+      ],
+      "cargoInspectionProcedures": [
+        "Physical Inspection",
+        "X-Ray Inspection",
+        "Radiation Detection"
+      ],
+      "fees": [
+        "Customs Duty Fee",
+        "Inspection Fee",
+        "Storage Fee"
+      ]
+    }
+  ]
+  

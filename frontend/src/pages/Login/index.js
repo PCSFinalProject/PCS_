@@ -1,14 +1,21 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate ,Link} from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import { Flex, Box, Card, Heading, Form, Field, Radio, Button, Loader } from 'rimble-ui'
-
+// import { Flex, Box, Card, Heading, Form, Field, Radio, Button, Loader } from 'rimble-ui'
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button'
+import "./Login.css"
 import qs from 'qs';
 
 
 import api from '../../service/api';
 
+
 const Login = () => {
+   
+
+ 
+
 
     const navigate = useNavigate();
     const [cookies, setCookie, removeCookie] = useCookies();
@@ -16,9 +23,14 @@ const Login = () => {
     const [validated, setValidated] = useState(false);
     const [login, setLogin] = useState("");
     const [password, setPassword] = useState("");
-    const [userType, setUserType] = useState("client");
+    const [userType, setUserType] = useState("");
     const [submitDisabled, setSubmitDisabled] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+    const [activeTab, setActiveTab] = useState(0);
+
+    const handleTabChange = (index) => {
+      setActiveTab(index);
+    };
 
     function handleLogin(e) {
         setLogin(e.target.value);
@@ -31,6 +43,12 @@ const Login = () => {
     function handleRadio(e) {
         setUserType(e.target.value);
     };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+  
+        setIsLoading(true);
+     };
 
     const validateForm = useCallback(
         () => {
@@ -95,70 +113,55 @@ const Login = () => {
         }
     }, [login, password, userType, validated, isLoading, navigate, setCookie]);
 
-    const handleSubmit = e => {
-        e.preventDefault();
-        setIsLoading(true);
-    };
 
-    return (
-        <Flex height={'100vh'}>
-            <Box mx={'auto'} my={'auto'} width={[1, 1 / 2, 1 / 3, 1 / 4]}>
-                <Card>
-                    
-                    <Heading as={'h1'} mt={1} mb={3} textAlign={'center'} color={'primary'}>PCS</Heading>
-                    <Form onSubmit={handleSubmit}>
-                        <Flex mx={-3} flexWrap={"wrap"}>
-                            <Box width={1} px={3}>
-                                <Field label="Login" width={1}>
-                                    <Form.Input
-                                        type="text"
-                                        required
-                                        onChange={handleLogin}
-                                        value={login}
-                                        width={1}
-                                    />
-                                </Field>
-                            </Box>
-                            <Box width={1} px={3}>
-                                <Field label="Password" width={1}>
-                                    <Form.Input
-                                        type="password"
-                                        required
-                                        onChange={handlePassword}
-                                        value={password}
-                                        width={1}
-                                    />
-                                </Field>
-                            </Box>
-                        </Flex>
-                        <Flex mx={-3} flexWrap={"wrap"}>
-                            <Box width={1} px={3}>
-                                <Field label="Role" optional={false}>
-                                    <Radio
-                                        label="Port departments"
-                                        my={2}
-                                        value={"client"}
-                                        checked={userType === "client"}
-                                        onChange={handleRadio}
-                                    />
-                                    <Radio
-                                        label="Port Authority"
-                                        my={2}
-                                        value={"fi"}
-                                        checked={userType === "fi"}
-                                        onChange={handleRadio}
-                                    />
-                                </Field>
-                            </Box>
-                        </Flex>
-                        <Button type="submit" disabled={submitDisabled} width={1}>
-                            {isLoading ? <Loader color="white" /> : <p>Login</p>}
-                        </Button>
-                    </Form>
-                </Card>
-            </Box>
-        </Flex>
-    );
-}
+
+    
+      return (
+        <div class="login_main">
+            <div class ="Login_page" >
+        <Form onSubmit={handleSubmit} >
+          <h2 class="text-center">PCS</h2>
+          <Form.Group controlId="input1">
+            <Form.Label> UserName</Form.Label>
+            <Form.Control type="text" placeholder="Enter UserName" value={login} onChange={handleLogin} />
+          </Form.Group>
+          <Form.Group controlId="input2">
+            <Form.Label>Password</Form.Label>
+            <Form.Control type="text" placeholder="Enter Password" value={password} onChange={handlePassword} />
+          </Form.Group>
+          <Form.Group controlId="dropdown">
+            <Form.Label>Role</Form.Label>
+            <Form.Control as="select" value={userType} onChange={handleRadio}>
+              <option value="">Select an option</option>
+              <option value={"customOfficer"}>Custom Officer</option>
+              <option value={"fi"}>Port Autority</option>
+              <option value={"client"}>General client</option>
+              <option value={"shipAgency"}>Ship Agency</option>
+              <option value= {"trafficDept"}>Marine Department</option>
+              <option value= {"cargoHandling"}>Cargo Handling</option>
+            </Form.Control>
+          </Form.Group>
+          
+      <Button variant="primary"  type="submit"  disabled={submitDisabled} className ="mt-2 login_submit">
+      {isLoading ? 'Loading…' : 'Submit'}
+      </Button> 
+        </Form>
+        <p>
+        Don't have an account?{' '}
+        <Link to="/register">Create User</Link>
+      </p>
+        </div>
+        </div>
+      );
+    }
+    
+
+    
+    
+ 
+
+
+
+
 
 export default Login;
